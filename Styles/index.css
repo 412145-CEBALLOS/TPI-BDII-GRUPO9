@@ -1,11 +1,90 @@
+/* Paleta de colores:
+   - Fondo: #161925
+   - Nav: #23395B
+   - Texto principal: #406e8e
+   - Botón: #8ea8c3
+   - Select: #cbf7ed
+*/
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #161925;
+    color: #ffffff;
+}
+
+/* NAVIGATION */
+.nav-bar {
+    background-color: #23395B;
+    padding: 1rem 2rem;
+    border-radius: 0 0 15px 15px;
+    text-align: center;
+}
+
+.nav-link {
+    color: #cbf7ed;
+    font-size: 1.25rem;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    padding: 15px;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+}
+
+/* CONTENIDO PRINCIPAL */
 .contenido {
     display: flex;
     flex-direction: column;
-    align-items: center; /* centramos el contenido vertical */
-    position: relative;
+    align-items: center;
+    padding: 4rem 1rem;
+    gap: 2rem;
 }
 
+.titulo-principal {
+    font-size: 4rem;
+    color: #406e8e;
+    text-align: center;
+    margin-bottom: 1rem;
+}
 
+.select-label {
+    font-size: 1.5rem;
+    color: #cbf7ed;
+}
+
+.select {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 10px;
+    background-color: #cbf7ed;
+    color: #23395B;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.select:focus {
+    outline: 2px solid #8ea8c3;
+}
+
+.button {
+    font-size: 1.5rem;
+    padding: 0.75rem 2.5rem;
+    background-color: #8ea8c3;
+    color: #23395B;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+    background-color: #406e8e;
+    transform: scale(1.05);
+}
 
 
 
