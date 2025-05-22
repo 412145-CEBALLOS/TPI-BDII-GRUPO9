@@ -1,0 +1,44 @@
+.contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centramos el contenido vertical */
+    position: relative;
+}
+
+.casa {
+    width: 400px;
+    height: 300px;
+
+    position: relative;
+    margin: 20px;
+}
+
+
+/* Zona sensor 1 (planta baja, derecha) */
+.sensor1 {
+    width: 400px;
+    height: 150px;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    background-image: url("../Images/casa_1.jpg");
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+/* Capa roja semitransparente al hacer hover */
+.sensor1::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(255, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* no bloquea el hover del contenedor */
+}
+
+.sensor1:hover::after {
+    opacity: 1;
+}

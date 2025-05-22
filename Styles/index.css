@@ -1,0 +1,15 @@
+.contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centramos el contenido vertical */
+    position: relative;
+}
+
+
+
+
+
+  
+
+
+  
