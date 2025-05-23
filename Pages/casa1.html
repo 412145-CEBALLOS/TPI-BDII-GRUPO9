@@ -6,21 +6,62 @@
     <link rel="stylesheet" href="/Styles/casa.css">
 </head>
 <body>
-<div class="casa-container">
-    <img src="../Images/casa_1.png" alt="Casa 1" class="fondo-casa">
-    <!-- PLANTA BAJA -->
-    <div class="habitacion cochera1" data-sensor="Cochera"></div>
-    <div class="habitacion living1" data-sensor="Living"></div>
+<div class="pagina" id="casa1">
+    <div class="info-casa">
+        <p><strong>Ubicación:</strong> Zona Residencial Norte</p>
+        <p><strong>Sensores activos:</strong> 6</p>
+        <div class="sensor-info">Pasa el mouse sobre las habitaciones para activar los sensores</div>
+    </div>
 
-    <!-- PRIMER PISO -->
-    <div class="habitacion cocina1" data-sensor="Cocina"></div>
-    <div class="habitacion oficina1" data-sensor="Oficina"></div>
+    <!-- SEPARAR LOS DOS BLOQUES EN .fila-casa -->
+    <div class="fila-casa">
+        <!-- Imagen de la casa con sensores -->
+        <div class="casa-container">
+            <img src="../Images/casa_1.png" alt="Casa 1" class="fondo-casa">
 
-    <!-- SEGUNDO PISO (ÁTICO) -->
-    <div class="habitacion dormitorio1" data-sensor="Dormitorio"></div>
-    <div class="habitacion bano1" data-sensor="Baño"></div>
+            <!-- Habitaciones -->
+            <div class="habitacion cochera1" data-sensor="Cochera"></div>
+            <div class="habitacion living1" data-sensor="Living"></div>
+            <div class="habitacion cocina1" data-sensor="Cocina"></div>
+            <div class="habitacion oficina1" data-sensor="Oficina"></div>
+            <div class="habitacion dormitorio1" data-sensor="Dormitorio"></div>
+            <div class="habitacion bano1" data-sensor="Baño"></div>
+        </div>
+
+        <!-- Panel de estado AL COSTADO -->
+        <div class="panel-detalle-estado">
+            <h3>📡 Estado actual de sensores</h3>
+            <table class="tabla-detalle">
+                <thead>
+                <tr>
+                    <th>Habitación</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Duración</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Cocina</td>
+                    <td class="estado encendido">Encendido</td>
+                    <td>2025-05-22</td>
+                    <td>12:45:23</td>
+                    <td>1m 13s</td>
+                </tr>
+                <tr>
+                    <td>Living</td>
+                    <td class="estado apagado">Apagado</td>
+                    <td>2025-05-22</td>
+                    <td>12:43:18</td>
+                    <td>2m 05s</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-</div>
+
 <!-- Navegación casas -->
 <div class="navegacion-casas">
     <button id="btn-anterior" class="boton-flecha" title="Casa anterior">↤</button>
