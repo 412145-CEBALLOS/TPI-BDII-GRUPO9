@@ -1,0 +1,182 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #111;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.casa-container {
+    position: relative;
+    width: 480px;
+    height: auto;
+    margin: 1rem;
+}
+
+.fondo-casa {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.habitacion {
+    position: absolute;
+    background-color: rgba(255, 255, 0, 0);
+    transition: background-color 0.3s;
+}
+
+.habitacion:hover {
+    background-color: rgba(255, 255, 100, 0.45);
+    cursor: pointer;
+}
+
+/* ÁTICO - formas reales */
+.dormitorio1 {
+    top: 32px;
+    left: 69px;
+    width: 200px;
+    height: 162px;
+    clip-path: polygon(0% 100%, 0% 70%, 86% 6%, 100% 18%, 100% 100%);
+}
+
+.bano1 {
+    top: 68px;
+    left: 283px;
+    width: 130px;
+    height: 125px;
+    clip-path: polygon(0% 0%, 100% 60%, 100% 100%, 0% 100%);
+}
+
+/* PRIMER PISO */
+.oficina1 {
+    top: 205px;
+    left: 68px;
+    width: 130px;
+    height: 106px;
+}
+
+.cocina1 {
+    top: 205px;
+    left: 210px;
+    width: 202px;
+    height: 106px;
+}
+
+/* PLANTA BAJA */
+.living1 {
+    top: 323px;
+    left: 68px;
+    width: 190px;
+    height: 108px;
+}
+
+.cochera1 {
+    top: 323px;
+    left: 271px;
+    width: 141px;
+    height: 108px;
+}
+/* CASA 2 */
+
+.casa2-container {
+    position: relative;
+    width: 480px;
+    margin: 1rem auto;
+}
+
+.casa2-container .fondo-casa {
+    width: 100%;
+    display: block;
+}
+
+/* Planta alta */
+.baño2 {
+    top: 160px;
+    left: 60px;
+    width: 140px;
+    height: 114px;
+}
+
+.living2 {
+    top: 160px;
+    left: 210px;
+    width: 214px;
+    height: 114px;
+}
+
+/* Planta baja */
+.dormitorio2 {
+    top: 284px;
+    left: 60px;
+    width: 160px;
+    height: 115px;
+}
+
+.cocina2 {
+    top: 284px;
+    left: 235px;
+    width: 189px;
+    height: 116px;
+}
+/* CASA 3 */
+
+.casa3-container {
+    position: relative;
+    width: 480px;
+    margin: 1rem auto;
+}
+
+.casa3-container .fondo-casa {
+    width: 100%;
+    display: block;
+}
+
+/* Planta alta */
+.dormitorio3 {
+    top: 22px;
+    left: 62px;
+    width: 212px;
+    height: 172px;
+    clip-path: polygon(0% 100%, 0% 70%, 83% 7%, 100% 20%, 100% 100%);
+}
+
+.baño3 {
+    top: 63px;
+    left: 283px;
+    width: 132px;
+    height: 130px;
+    clip-path: polygon(0% 0%, 100% 60%, 100% 100%, 0% 100%);
+}
+
+/* Primer piso */
+.oficina3 {
+    top: 202px;
+    left: 60px;
+    width: 140px;
+    height: 115px;
+}
+
+.cocina3 {
+    top: 203px;
+    left: 207px;
+    width: 210px;
+    height: 114px;
+}
+
+/* Planta baja */
+.living3 {
+    top: 324px;
+    left: 60px;
+    width: 202px;
+    height: 118px;
+}
+
+.cochera3 {
+    top: 325px;
+    left: 271px;
+    width: 145px;
+    height: 117px;
+}

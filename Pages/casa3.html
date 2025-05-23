@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Simulación de Casa con Sensores</title>
-    <link rel="stylesheet" href="Styles/CSS.css">
+    <meta charset="UTF-8" />
+    <title>Casa 3</title>
+    <link rel="stylesheet" href="/Styles/casa.css" />
 </head>
 <body>
-<div class="contenido">
-    <div class="casa">
-        <div class="sensor sensor1" title="Sensor 1"></div>
-        <div class="linea-piso"></div>
-        <div class="linea-division"></div>
-    </div>
+<div class="casa3-container">
+    <img src="../Images/casa_3.png" alt="Casa 3" class="fondo-casa" />
 
+    <!-- Planta alta -->
+    <div class="habitacion dormitorio3" data-sensor="Dormitorio"></div>
+    <div class="habitacion baño3" data-sensor="Baño"></div>
+
+    <!-- Primer piso -->
+    <div class="habitacion oficina3" data-sensor="Oficina"></div>
+    <div class="habitacion cocina3" data-sensor="Cocina"></div>
+
+    <!-- Planta baja -->
+    <div class="habitacion living3" data-sensor="Living"></div>
+    <div class="habitacion cochera3" data-sensor="Cochera"></div>
 </div>
+
+<script src="script.js"></script>
 </body>
 </html>
+
