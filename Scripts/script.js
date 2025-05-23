@@ -85,3 +85,62 @@ document.querySelectorAll('.habitacion').forEach(hab => {
 // Calcular el total de consumo agrupado por hora del día
 // Identificar horas con consumo inusualmente alto respecto al promedio diario
 // Útil para alertas o recomendaciones de eficiencia energética
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const casas = ["casa1.html", "casa2.html", "casa3.html"]; // Casas.html
+const currentFile = window.location.pathname.split("/").pop();
+const currentFolder = window.location.pathname.split("/").slice(-2, -1)[0]; // Detecta si estás en "Pages"
+
+// Ir al index desde la carpeta "Pages/"
+const pathToIndex = currentFolder === "Pages" ? "../index.html" : "index.html";
+
+// Esto ve si estas en la raíz y agrega "Pages/" en caso de que cambies la página
+const pathPrefix = currentFolder === "Pages" ? "" : "Pages/";
+
+// Botón siguiente
+const btnSiguiente = document.getElementById("btn-siguiente");
+if (btnSiguiente) {
+    if (currentFile === "index.html") {
+        btnSiguiente.addEventListener("click", () => {
+            window.location.href = "Pages/casa1.html";
+        });
+    } else if (casas.includes(currentFile)) {
+        const index = casas.indexOf(currentFile);
+        if (index < casas.length - 1) {
+            btnSiguiente.addEventListener("click", () => {
+                window.location.href = pathPrefix + casas[index + 1];
+            });
+        }
+    }
+}
+
+// Botón anterior
+const btnAnterior = document.getElementById("btn-anterior");
+if (btnAnterior) {
+    btnAnterior.addEventListener("click", () => {
+        if (currentFile === "casa1.html") {
+            window.location.href = pathToIndex;
+        } else if (casas.includes(currentFile)) {
+            const index = casas.indexOf(currentFile);
+            if (index > 0) {
+                window.location.href = pathPrefix + casas[index - 1];
+            }
+        }
+    });
+}
