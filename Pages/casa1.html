@@ -2,17 +2,26 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Simulación de Casa con Sensores</title>
+    <title>Casa 1</title>
     <link rel="stylesheet" href="/Styles/casa1.css">
 </head>
 <body>
-<div class="contenido">
-    <div class="casa">
-        <div class="sensor sensor1" title="Sensor 1"></div>
-        <div class="linea-piso"></div>
-        <div class="linea-division"></div>
-    </div>
+<div class="casa-container">
+    <img src="../Images/casa_1.png" alt="Casa 1" class="fondo-casa">
+    <!-- PLANTA BAJA -->
+    <div class="habitacion cochera" data-sensor="Cochera"></div>
+    <div class="habitacion living" data-sensor="Living"></div>
 
+    <!-- PRIMER PISO -->
+    <div class="habitacion cocina" data-sensor="Cocina"></div>
+    <div class="habitacion oficina" data-sensor="Oficina"></div>
+
+    <!-- SEGUNDO PISO (ÁTICO) -->
+    <div class="habitacion dormitorio" data-sensor="Dormitorio"></div>
+    <div class="habitacion bano" data-sensor="Baño"></div>
 </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
