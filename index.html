@@ -3,24 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulación de Casa con Sensores</title>
+  <title>Monitor IoT con Sensores - Grupo 9</title>
   <link rel="stylesheet" href="Styles/index.css">
 </head>
 <body>
 <main class="contenido">
-  <h1 class="titulo-principal">¡Bienvenido al TPI!</h1>
-  <h2 class="subtitulo-nosotros">Somos Grupo N° 9</h2>
-  <table class="tabla-integrantes">
-    <tr><td>412070</td><td>Belatti García, Mariano</td></tr>
-    <tr><td>412016</td><td>Camacho Luengo, Gabriela Anahí</td></tr>
-    <tr><td>412145</td><td>Ceballos, Ismael Gastón</td></tr>
-    <tr><td>412285</td><td>Cotaimich, Santiago Matías</td></tr>
-    <tr><td>423947</td><td>Pucci, Milagros</td></tr>
-    <tr><td>412109</td><td>Sanchez, Gonzalo Ivo</td></tr>
-  </table>
+  <h1 class="titulo-principal">GRUPO N° 9</h1>
+
+  <div class="descripcion-proyecto">
+    <p><strong> Proyecto IoT</strong></p>
+    <p>Sistema de simulación de sensores de movimiento en habitaciones utilizando MongoDB. El proyecto simula la detección de movimiento mediante interacción del mouse, activando luces automáticamente y registrando datos históricos como tiempos de encendido. Implementa tres colecciones: casas, sensores y registros históricos para el análisis completo del sistema domótico.</p>
+  </div>
+
+  <div class="contenedor-tabla">
+    <table class="tabla-integrantes">
+      <thead>
+      <tr>
+        <th>Legajo</th>
+        <th>Apellido y Nombre</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr><td>412070</td><td>Belatti García, Mariano</td></tr>
+      <tr><td>412016</td><td>Camacho Luengo, Gabriela Anahí</td></tr>
+      <tr><td>412145</td><td>Ceballos, Ismael Gastón</td></tr>
+      <tr><td>412285</td><td>Cotaimich, Santiago Matías</td></tr>
+      <tr><td>423947</td><td>Pucci, Milagros</td></tr>
+      <tr><td>412109</td><td>Sanchez, Gonzalo Ivo</td></tr>
+      </tbody>
+    </table>
+  </div>
+
   <!-- Navegación casas -->
   <div class="navegacion-casas">
-    <button id="btn-siguiente" class="boton-flecha" title="Casa siguiente">↦</button>
+    <button id="btn-siguiente" class="boton-flecha" title="Casa siguiente">→</button>
   </div>
 </main>
 <script src="Scripts/script.js"></script>
