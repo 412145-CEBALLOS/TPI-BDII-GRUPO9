@@ -74,6 +74,15 @@
         Explorá datos históricos, realizá comparaciones y filtrá por fechas, habitaciones o casas.
     </p>
 
+    <div class="tabs-analisis">
+        <button class="tab-btn" data-seccion="uso">Uso</button>
+        <button class="tab-btn" data-seccion="consumo">Consumo</button>
+        <button class="tab-btn" data-seccion="habitos">Hábitos</button>
+        <button class="tab-btn" data-seccion="comparativas">Comparativas</button>
+    </div>
+
+    <div id="contenedor-estadisticas"></div>
+
     <!-- Filtros -->
     <div class="filtros-analisis">
         <label>Desde: <input type="date" id="filtro-desde"></label>
@@ -88,6 +97,47 @@
         </label>
         <button class="btn-filtrar">Filtrar</button>
     </div>
+    <div class="bloque-analisis">
+        <h3>📊 Uso de habitaciones</h3>
+        <ul class="lista-analisis">
+            <li><strong>Habitación más usada:</strong> Cocina</li>
+            <li><strong>Tiempo promedio de uso:</strong> 3m 20s</li>
+            <li><strong>Último uso:</strong> Dormitorio - 2025-05-22 22:15</li>
+            <li><strong>Habitaciones sin uso este mes:</strong> Oficina</li>
+        </ul>
+    </div>
+
+    <div class="bloque-analisis">
+        <h3>⚡ Consumo y costos</h3>
+        <ul class="lista-analisis">
+            <li><strong>Consumo diario:</strong> 12.5 kWh</li>
+            <li><strong>Consumo mensual:</strong> 352.3 kWh</li>
+            <li><strong>Boleta estimada:</strong> $42.276</li>
+            <li><strong>Escalón tarifario:</strong> 2</li>
+            <li><strong>Bonificación aplicada:</strong> 10%</li>
+            <li><strong>Alerta de consumo:</strong> 89% del límite alcanzado</li>
+        </ul>
+    </div>
+
+    <div class="bloque-analisis">
+        <h3>🕒 Hábitos y horarios</h3>
+        <ul class="lista-analisis">
+            <li><strong>Franja horaria más activa:</strong> 18:00–22:00</li>
+            <li><strong>Día más activo:</strong> Miércoles</li>
+            <li><strong>Pico horario:</strong> 21:00 - 3.2 kWh</li>
+        </ul>
+    </div>
+
+    <div class="bloque-analisis">
+        <h3>📈 Comparativas</h3>
+        <ul class="lista-analisis">
+            <li><strong>Variación mensual:</strong> +5%</li>
+            <li><strong>Top 3 casas:</strong> Casa 3 (412kWh), Casa 1 (352kWh), Casa 2 (291kWh)</li>
+            <li><strong>Consumo por habitación (Casa 1):</strong></li>
+            <!-- Aquí podés insertar un gráfico más adelante -->
+            <div id="grafico-habitaciones-casa1" style="height: 250px;">[📊 acá va un gráfico]</div>
+        </ul>
+    </div>
 
     <!-- Resultados (puede ser tabla, tarjetas, gráficos) -->
     <div class="resultados-analisis">
@@ -100,6 +150,7 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/Scripts/script.js"></script>
 </body>
 </html>

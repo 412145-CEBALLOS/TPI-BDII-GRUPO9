@@ -396,3 +396,144 @@ body {
     border-radius: 12px;
     margin-top: 1rem;
 }
+.bloque-analisis {
+    background-color: rgba(35, 57, 91, 0.2);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.bloque-analisis h3 {
+    font-size: 1.2rem;
+    color: #b2e8dd;
+    margin-bottom: 0.8rem;
+    text-align: left;
+}
+
+.lista-analisis {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    color: #cbf7ed;
+}
+
+.lista-analisis li {
+    margin-bottom: 0.5rem;
+}
+#graficoConsumoHabitaciones {
+    max-width: 100%;
+    margin-top: 1rem;
+}
+.tabs-analisis {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+.tab-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.tab-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.tab-btn.activa {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+    transform: translateY(-1px);
+}
+
+.tab-btn.activa::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #4facfe;
+}
+
+/* Ocultar las secciones estáticas del HTML por defecto */
+.bloque-analisis {
+    display: none;
+}
+
+/* Mostrar solo el contenedor dinámico */
+#contenedor-estadisticas {
+    min-height: 200px;
+    padding: 20px 0;
+}
+
+/* Animación para el contenido */
+#contenedor-estadisticas .bloque-analisis {
+    display: block !important;
+    animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilo mejorado para los bloques de análisis */
+#contenedor-estadisticas .bloque-analisis {
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+#contenedor-estadisticas .bloque-analisis h3 {
+    color: #4facfe;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#contenedor-estadisticas .lista-analisis {
+    list-style: none;
+    padding: 0;
+}
+
+#contenedor-estadisticas .lista-analisis li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: #e0e0e0;
+}
+
+#contenedor-estadisticas .lista-analisis li:last-child {
+    border-bottom: none;
+}
+
+#contenedor-estadisticas .lista-analisis strong {
+    color: #ffffff;
+    margin-right: 8px;
+}
