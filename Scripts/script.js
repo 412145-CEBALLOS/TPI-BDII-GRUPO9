@@ -14,6 +14,95 @@ document.querySelectorAll('.habitacion').forEach(hab => {
         });
     });
 });
+
+
+//inicia temporizador en el cuadro de detalle de estado
+const temporizadores = {};
+
+function iniciarTemporizador(sensorId) {
+    const span = document.getElementById(`timer-${sensorId}`);
+    if (!span) return;
+    const start = new Date();
+
+    temporizadores[sensorId] = {
+        interval: setInterval(() => {
+            const now = new Date();
+            const diff = Math.floor((now - start) / 1000);
+            const min = Math.floor(diff / 60);
+            const sec = diff % 60;
+            span.textContent = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        }, 1000),
+        startTime: start
+    };
+}
+
+function detenerTemporizador(sensorId) {
+    const timer = temporizadores[sensorId];
+    if (timer) {
+        clearInterval(timer.interval);
+        delete temporizadores[sensorId];
+    }
+}
+
+// Configurar eventos en todas las habitaciones
+document.querySelectorAll('.habitacion').forEach(habitacion => {
+    const sensorId = habitacion.dataset.sensor;
+
+    habitacion.addEventListener('mouseenter', () => {
+        habitacion.classList.add('luz-encendida');
+
+        // Si no existe ya una fila para ese sensor, agregarla a la tabla
+        if (!document.getElementById(`row-${sensorId}`)) {
+            const tbody = document.querySelector('.tabla-detalle tbody');
+            const row = document.createElement('tr');
+            row.id = `row-${sensorId}`;
+            row.innerHTML = `
+                <td>${sensorId}</td>
+                <td class="estado encendido">Encendido</td>
+                <td>${new Date().toISOString().split('T')[0]}</td>
+                <td>${new Date().toLocaleTimeString()}</td>
+                <td><span id="timer-${sensorId}">00:00</span></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        iniciarTemporizador(sensorId);
+    });
+
+    habitacion.addEventListener('mouseleave', () => {
+        habitacion.classList.remove('luz-encendida');
+
+        const row = document.getElementById(`row-${sensorId}`);
+        if (row) {
+            const estado = row.querySelector('.estado');
+            if (estado) estado.textContent = 'Apagado';
+            estado.classList.remove('encendido');
+            estado.classList.add('apagado');
+        }
+
+        detenerTemporizador(sensorId);
+    });
+});
+
+
+
+
+//muestra/oculta secciones
+document.querySelector('.btn-estadisticas')?.addEventListener('click', () => {
+    // Oculta todas las otras páginas
+    document.querySelectorAll('.pagina').forEach(p => p.style.display = 'none');
+    // Muestra el panel de análisis
+    document.getElementById('panel-analisis').style.display = 'block';
+});
+
+document.getElementById('btn-volver')?.addEventListener('click', () => {
+    // Oculta el panel de análisis
+    document.getElementById('panel-analisis').style.display = 'none';
+    // Mostramos de nuevo la casa activa
+    document.getElementById('casa1').style.display = 'block'; // o dinámica si usás varias
+});
+
+
 // TODO: Implementar cálculo de la habitación más usada
 // Obtener todas las activaciones agrupadas por habitación
 // Contar cantidad de veces que cada habitación fue utilizada

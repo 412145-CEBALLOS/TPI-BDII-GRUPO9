@@ -1,97 +1,45 @@
 body {
     margin: 0;
-    padding: 40px 0;
+    padding: 0;
     background: linear-gradient(135deg, #161925 0%, #1e2230 100%);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
     min-height: 100vh;
 }
-.info-casa, .titulo-casa {
-    color: #cbf7ed; /* texto celeste claro */
+
+.encabezado-casa {
     text-align: center;
-}
-.info-casa {
-    background: rgba(203, 247, 237, 0.07);
-    border: 1px solid rgba(203, 247, 237, 0.2);
-    border-radius: 16px;
-    padding: 0.8rem 1.5rem;
-    width: 100%;
-    max-width: 1052px;
-    text-align: center;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
     color: #cbf7ed;
-    font-size: 1rem;
-    position: relative;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 60px;
-    z-index: 5;
 }
 
-/* Título principal */
-.info-casa .titulo-principal {
-    font-size: 1.2rem;
-    font-weight: 600;
+.titulo-casa-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.titulo-casa {
+    font-size: 2rem;
     color: #b2e8dd;
-    margin: 0 25px;
-}
-
-/* Badge de sensores activos */
-.info-casa .badge-sensores {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(127, 255, 149, 0.15);
-    border: 1px solid rgba(127, 255, 149, 0.3);
-    border-radius: 20px;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    color: #7fff95;
-    font-weight: 600;
-    min-height: 36px;
-}
-
-.info-casa .badge-sensores::before {
-    content: "📡";
-    font-size: 1rem;
-}
-
-/* Opcional: ícono decorativo */
-.info-casa::before {
-    content: "🏠";
-    font-size: 1.2rem;
-    position: absolute;
-    left: 1rem;
-    color: #8ea8c3;
-    opacity: 0.7;
-}
-
-/* Mejorar visibilidad de <strong> */
-.info-casa strong {
-    color: #ffffff;
-    font-weight: bold;
-}
-
-
-/* Ajuste para el texto principal */
-.info-casa .ubicacion-texto {
-    flex-grow: 1;
-    text-align: center;
     margin: 0;
 }
 
-/* Resaltar nombre de ubicación */
-.info-casa p:first-of-type {
-    font-size: 1.1rem;
-    color: #b2e8dd;
-    font-weight: 600;
+/* Badge sensores */
+.badge-sensores {
+    background-color: #406e8e;
+    color: #cbf7ed;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid rgba(203, 247, 237, 0.3);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .fondo-casa {
@@ -270,8 +218,7 @@ body {
     align-items: center;
     padding: 0 1rem;
     transform: translateY(-50%);
-    z-index: 1;
-    pointer-events: none;
+    z-index: 10;
 }
 
 .boton-flecha {
@@ -295,18 +242,17 @@ body {
    ───────────────────────────── */
 
 .panel-detalle-estado {
+    margin-top: 2rem;
     background-color: rgba(35, 57, 91, 0.3);
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 1.2rem;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     overflow-x: auto;
-    max-width: 550px;
-    min-width: 350px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
     backdrop-filter: blur(6px);
     border: 1px solid rgba(203, 247, 237, 0.1);
-    flex-shrink: 0;
-    height: fit-content;
-    align-self: flex-start;
 }
 
 .panel-detalle-estado h3 {
@@ -332,7 +278,7 @@ body {
 
 .tabla-detalle th,
 .tabla-detalle td {
-    padding: 0.8rem 0.6rem;
+    padding: 0.15rem 0.4rem;
     text-align: center;
     border-bottom: 1px solid rgba(203, 247, 237, 0.08);
 }
@@ -360,14 +306,11 @@ body {
 
 .fila-casa {
     display: flex;
-    gap: 4rem;
-    justify-content: center;
+    gap: 2rem;
+    justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: nowrap; /* OJO: esto evita que se vaya para abajo */
-    margin-top: 3rem;
-    width: 100%;
-    max-width: 1200px;
-    padding: 0 2rem;
+    margin-top: 2rem;
 }
 
 .casa-container {
@@ -377,42 +320,79 @@ body {
 }
 
 .panel-detalle-estado {
-    flex-grow: 1;
-    max-width: 500px;
-    min-width: 300px;
-}
-/* RESPONSIVIDAD MEJORADA */
-@media (max-width: 1024px) {
-    .fila-casa {
-        gap: 2.5rem;
-        padding: 0 1rem;
-    }
-
-    .panel-detalle-estado {
-        max-width: 400px;
-        min-width: 300px;
-    }
+    max-height: 85vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
-@media (max-width: 768px) {
-    .fila-casa {
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-    }
+.acciones-panel {
+    text-align: center;
+    margin-top: 1.5rem;
+    position: relative;
+    top: -20px;
+}
 
-    .casa-container {
-        width: 100%;
-        max-width: 480px;
-    }
+.btn-estadisticas {
+    background-color: #406e8e;
+    color: #cbf7ed;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-    .panel-detalle-estado {
-        width: 100%;
-        max-width: 480px;
-    }
+.btn-estadisticas:hover {
+    background-color: #5a8ab4;
+}
+#panel-analisis {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: #cbf7ed;
+}
 
-    .info-casa {
-        margin-left: 1rem;
-        margin-right: 1rem;
-    }
+.descripcion-analisis {
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    color: #8ea8c3;
+}
+
+.filtros-analisis {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.filtros-analisis label {
+    font-size: 0.95rem;
+}
+
+.filtros-analisis input,
+.filtros-analisis select {
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #23395b;
+    color: #cbf7ed;
+}
+
+.btn-filtrar {
+    background-color: #406e8e;
+    color: #cbf7ed;
+    border: none;
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.resultados-analisis {
+    background-color: rgba(35, 57, 91, 0.2);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-top: 1rem;
 }

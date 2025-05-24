@@ -7,10 +7,10 @@
 </head>
 <body>
 <div class="pagina" id="casa2">
-    <div class="info-casa">
-        <div class="titulo-principal">Casa 2 - Zona Residencial Norte</div>
-        <div class="badge-sensores">
-            <span>4 Sensores Activos</span>
+    <div class="encabezado-casa">
+        <div class="titulo-casa-container">
+            <h1 class="titulo-casa">🏠 Casa 2</h1>
+            <span class="badge-sensores">🟢 4 sensores activos</span>
         </div>
     </div>
 
@@ -46,7 +46,7 @@
                 <td class="estado encendido">Encendido</td>
                 <td>2025-05-22</td>
                 <td>12:45:23</td>
-                <td>1m 13s</td>
+                <td><span class="temporizador" data-inicio="2025-05-22T12:45:23" id="timer-cocina">00:00</span></td>
             </tr>
             <tr>
                 <td>Living</td>
@@ -59,11 +59,45 @@
         </table>
     </div>
     </div>
+    <div class="acciones-panel">
+        <button class="btn-estadisticas">🔍 Abrir panel de análisiss</button>
+    </div>
 </div>
 <!-- Navegación casas -->
 <div class="navegacion-casas">
     <button id="btn-anterior" class="boton-flecha" title="Casa anterior">↤</button>
     <button id="btn-siguiente" class="boton-flecha" title="Casa siguiente">↦</button>
+</div>
+<div class="pagina" id="panel-analisis" style="display: none;">
+    <h2 class="titulo-seccion">📊 Panel de análisis y búsqueda</h2>
+    <p class="descripcion-analisis">
+        Explorá datos históricos, realizá comparaciones y filtrá por fechas, habitaciones o casas.
+    </p>
+
+    <!-- Filtros -->
+    <div class="filtros-analisis">
+        <label>Desde: <input type="date" id="filtro-desde"></label>
+        <label>Hasta: <input type="date" id="filtro-hasta"></label>
+        <label>Casa:
+            <select id="filtro-casa">
+                <option value="todas">Todas</option>
+                <option value="casa1">Casa 1</option>
+                <option value="casa2">Casa 2</option>
+                <option value="casa3">Casa 3</option>
+            </select>
+        </label>
+        <button class="btn-filtrar">Filtrar</button>
+    </div>
+
+    <!-- Resultados (puede ser tabla, tarjetas, gráficos) -->
+    <div class="resultados-analisis">
+        <p>⚠️ Aún no hay datos filtrados. Elegí una opción y presioná "Filtrar".</p>
+    </div>
+
+    <!-- Botón para volver -->
+    <div class="acciones-estadisticas">
+        <button id="btn-volver" class="btn-estadisticas">⬅️ Volver a la casa</button>
+    </div>
 </div>
 
 <script src="/Scripts/script.js"></script>
