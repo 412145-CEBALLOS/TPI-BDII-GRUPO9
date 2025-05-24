@@ -53,7 +53,7 @@ class SensorManager {
 
     enviarDatosSensor(sensor) {
         console.log(`Sensor activado en: ${sensor}`);
-
+        //TODO subir a la BD con "postEvento(altura, sensor, segundos)"
         fetch('/api/sensor/encendido', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -283,21 +283,21 @@ class DataManager {
         this.datosPorCasa = {
             casa1: {
                 uso: {
-                    masUsada: "Cocina",
-                    promedio: "3m 20s",
-                    ultimoUso: "Dormitorio - 2025-05-22 22:15",
-                    sinUso: ["Oficina"]
+                    masUsada: "Cocina", //hecho
+                    promedio: "3m 20s", //hecho (solo segundos)
+                    ultimoUso: "Dormitorio - 2025-05-22 22:15", //hecho
+                    sinUso: ["Oficina"] //hecho (mes actual)
                 },
                 consumo: {
                     diario: "12.5 kWh",
                     mensual: "352.3 kWh",
                     costo: "$42.276",
-                    escalon: 2,
-                    bonificacion: "10%",
-                    alerta: "89% del límite alcanzado"
+                    escalon: 2, // desde la bd
+                    bonificacion: "10%", // desde la bd
+                    alerta: "89% del límite alcanzado" // desde la bd
                 },
                 habitos: {
-                    franjaActiva: "18:00–22:00",
+                    franjaActiva: "18:00–22:00", //hecho (una sola hora)
                     diaActivo: "Miércoles",
                     pico: "21:00 - 3.2 kWh"
                 },
@@ -825,20 +825,35 @@ document.addEventListener('DOMContentLoaded', () => {
     new SmartHomeApp();
 });
 
-// =============================================
-// TODO: FUNCIONALIDADES PENDIENTES
-// =============================================
+// habitación más usada
+async function getHabitacionMasUsada(altura) {
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/habitacion-mas-usada/' + altura);
 
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar la habitación`);
+        }
 
-// TODO: Implementar cálculo de la habitación más usada
-// Obtener todas las activaciones agrupadas por habitación
-// Contar cantidad de veces que cada habitación fue utilizada
-// Devolver la habitación con mayor cantidad de usos o ranking completo
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar:', error);
+    }
+}
 
-// TODO: Calcular tiempo promedio de uso por habitación
-// Sumar duración total de uso por habitación
-// Dividir por la cantidad de activaciones de cada habitación
-// Mostrar resultado en segundos o minutos promedio
+// tiempo promedio de uso por habitación
+async function getTiempoPromedioPorHabitacion(altura, sensor) {
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/tiempo-promedio/'+ altura +'?sensor=' + sensor);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar el tiempo`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar:', error);
+    }
+}
 
 // TODO: Generar reporte de consumo de energía por día, semana y mes
 // Agrupar los eventos por fecha (día, semana y mes)
@@ -850,10 +865,20 @@ document.addEventListener('DOMContentLoaded', () => {
 // Multiplicar por tarifa energética definida (ej. $120/kWh)
 // Mostrar total estimado en pesos argentinos
 
-// TODO: Determinar franja horaria más activa
-// Extraer hora de cada evento
-// Agrupar y contar activaciones por hora (0–23)
-// Mostrar la hora con mayor cantidad de encendidos por casa o habitación
+// Determinar hora más activa
+async function getHoraMasActiva(altura) {
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/hora-mas-detecciones/' + altura);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar la hora`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar:', error);
+    }
+}
 
 // TODO: Detectar escalón tarifario alcanzado por cada casa
 // Sumar consumo mensual y compararlo contra límites de escalones (ej. 300, 600 kWh)
@@ -887,15 +912,35 @@ document.addEventListener('DOMContentLoaded', () => {
 // Contar la frecuencia de uso por cada día
 // Mostrar los días con mayor y menor consumo por casa
 
-// TODO: Registrar el último uso de cada habitación
-// Obtener el último evento registrado para cada habitación
-// Mostrar la fecha y hora exacta del último uso
-// Útil para mostrar “última actividad” en el panel principal
+// último uso de la casa
+async function getUltimaDeteccion(altura) {
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/ultima-deteccion/' + altura);
 
-// TODO: Identificar habitaciones que no se usaron en el mes
-// Listar todas las habitaciones por casa
-// Filtrar las que no tienen activaciones durante el mes actual
-// Mostrar en reporte de inactividad o eficiencia
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar la ultima detección`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar:', error);
+    }
+}
+
+// habitaciones que no se usaron en el mes
+async function getHabitacionesSinUso(altura) {
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/sensores-sin-deteccion/' + altura);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar los sensores`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar:', error);
+    }
+}
 
 // TODO: Detectar picos de consumo por hora
 // Calcular el total de consumo agrupado por hora del día
@@ -904,3 +949,101 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+// obtener todas las casas
+async function getCasas() {
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/casas');
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar las casas`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar:', error);
+    }
+}
+
+// obtener una casa por su altura
+async function getCasaById(altura) {
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/casas/' + altura);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar las casas`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar:', error);
+    }
+}
+
+// obtener todos los eventos
+async function getEventos() {
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/eventos');
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar los eventos`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar:', error);
+    }
+}
+
+// obtener eventos por su altura
+async function getEventosById(altura) {
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/eventos/' + altura);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar las casas`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar:', error);
+    }
+}
+
+// Subir evento a la bd
+function postEvento(altura, sensor, segundos) {
+    const fechaHora = obtenerFechaHora();
+
+    fetch('http://localhost:8080/api/v1/eventos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            "_id": 1,
+            "altura": altura,
+            "sensor": sensor,
+            "fecha": fechaHora.fecha,
+            "hora": fechaHora.hora,
+            "segundos": segundos,
+        })
+    }).catch(error => {
+        console.error('Error subiendo el movimiento:', error);
+    });
+}
+
+function obtenerFechaHora() {
+    const ahora = new Date();
+
+    // Obtener componentes de fecha
+    const dia = String(ahora.getDate()).padStart(2, "0");
+    const mes = String(ahora.getMonth() + 1).padStart(2, "0"); // Los meses van de 0 a 11
+    const ano = ahora.getFullYear();
+
+    // Obtener componentes de hora
+    const horas = String(ahora.getHours()).padStart(2, "0");
+    const minutos = String(ahora.getMinutes()).padStart(2, "0");
+    const segundos = String(ahora.getSeconds()).padStart(2, "0");
+
+    return {
+        fecha: `${dia}/${mes}/${ano}`,
+        hora: `${horas}:${minutos}:${segundos}`,
+    };
+}

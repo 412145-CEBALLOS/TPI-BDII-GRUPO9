@@ -1,0 +1,91 @@
+////////////////////// casas ////////////////////////
+[
+  {
+    "_id": 1,
+    "altura": 176,
+    "sensores": [
+      "Cochera",
+      "Living",
+      "Cocina",
+      "Oficina",
+      "Dormitorio",
+      "Baño"
+    ],
+    "consumo": {
+      "escalon": 2,
+      "bonificacion": "0%",
+      "alerta": "95% del consumo"
+    },
+    "costoMensual": 87000
+  },
+  {
+    "_id": 2,
+    "altura": 186,
+    "sensores": [
+      "Baño",
+      "Living",
+      "Dormitorio",
+      "Cocina"
+    ],
+    "consumo": {
+      "escalon": 1,
+      "bonificacion": "9%",
+      "alerta": "90% del consumo"
+    },
+    "costoMensual": 104000
+  },
+  {
+    "_id": 3,
+    "altura": 199,
+    "sensores": [
+      "Dormitorio",
+      "Baño",
+      "Oficina",
+      "Cocina",
+      "Living",
+      "Cochera"
+    ],
+    "consumo": {
+      "escalon": 3,
+      "bonificacion": "0%",
+      "alerta": "88% del consumo"
+    },
+    "costoMensual": 73000
+  }
+]
+////////////// movimientos ///////////////
+[
+  { "_id": 1, "altura": 176, "sensor": "Cochera", "fecha": "15/02/2025", "hora": "14:23:17", "segundos": 42 },
+  { "_id": 2, "altura": 176, "sensor": "Living", "fecha": "03/07/2025", "hora": "09:45:33", "segundos": 18 },
+  { "_id": 3, "altura": 176, "sensor": "Cocina", "fecha": "28/10/2025", "hora": "19:12:08", "segundos": 55 },
+  { "_id": 4, "altura": 176, "sensor": "Oficina", "fecha": "12/04/2025", "hora": "11:37:29", "segundos": 31 },
+  { "_id": 5, "altura": 176, "sensor": "Dormitorio", "fecha": "21/09/2025", "hora": "06:58:14", "segundos": 7 },
+  { "_id": 6, "altura": 176, "sensor": "Baño", "fecha": "07/12/2025", "hora": "22:19:46", "segundos": 39 },
+  { "_id": 7, "altura": 186, "sensor": "Baño", "fecha": "18/01/2025", "hora": "05:41:52", "segundos": 23 },
+  { "_id": 8, "altura": 186, "sensor": "Living", "fecha": "25/06/2025", "hora": "16:27:35", "segundos": 49 },
+  { "_id": 9, "altura": 186, "sensor": "Dormitorio", "fecha": "14/11/2025", "hora": "13:54:21", "segundos": 12 },
+  { "_id": 10, "altura": 186, "sensor": "Cocina", "fecha": "08/05/2025", "hora": "20:16:07", "segundos": 58 },
+  { "_id": 11, "altura": 199, "sensor": "Dormitorio", "fecha": "02/03/2025", "hora": "08:33:19", "segundos": 26 },
+  { "_id": 12, "altura": 199, "sensor": "Baño", "fecha": "19/08/2025", "hora": "17:42:58", "segundos": 44 },
+  { "_id": 13, "altura": 199, "sensor": "Oficina", "fecha": "05/01/2025", "hora": "12:09:36", "segundos": 15 },
+  { "_id": 14, "altura": 199, "sensor": "Cocina", "fecha": "23/04/2025", "hora": "07:51:43", "segundos": 37 },
+  { "_id": 15, "altura": 199, "sensor": "Living", "fecha": "16/07/2025", "hora": "21:28:12", "segundos": 4 },
+  { "_id": 16, "altura": 199, "sensor": "Cochera", "fecha": "30/12/2025", "hora": "03:15:27", "segundos": 51 },
+  { "_id": 17, "altura": 176, "sensor": "Cocina", "fecha": "24/06/2025", "hora": "01:23:01", "segundos": 7 },
+  { "_id": 18, "altura": 176, "sensor": "Cochera", "fecha": "10/01/2025", "hora": "08:12:43", "segundos": 10 },
+  { "_id": 19, "altura": 176, "sensor": "Living", "fecha": "22/03/2025", "hora": "10:45:27", "segundos": 37 },
+  { "_id": 20, "altura": 176, "sensor": "Oficina", "fecha": "09/06/2025", "hora": "13:23:15", "segundos": 19 },
+  { "_id": 21, "altura": 176, "sensor": "Cocina", "fecha": "17/08/2025", "hora": "16:11:05", "segundos": 41 },
+  { "_id": 22, "altura": 176, "sensor": "Dormitorio", "fecha": "29/11/2025", "hora": "19:34:56", "segundos": 28 },
+  { "_id": 23, "altura": 186, "sensor": "Baño", "fecha": "12/02/2025", "hora": "07:22:18", "segundos": 14 },
+  { "_id": 24, "altura": 186, "sensor": "Living", "fecha": "06/04/2025", "hora": "12:39:09", "segundos": 3 },
+  { "_id": 25, "altura": 186, "sensor": "Dormitorio", "fecha": "15/07/2025", "hora": "15:58:33", "segundos": 59 },
+  { "_id": 26, "altura": 186, "sensor": "Cocina", "fecha": "27/09/2025", "hora": "20:06:44", "segundos": 7 },
+  { "_id": 27, "altura": 186, "sensor": "Baño", "fecha": "30/12/2025", "hora": "03:14:22", "segundos": 16 },
+  { "_id": 28, "altura": 199, "sensor": "Cocina", "fecha": "04/01/2025", "hora": "09:18:29", "segundos": 20 },
+  { "_id": 29, "altura": 199, "sensor": "Oficina", "fecha": "18/03/2025", "hora": "11:47:10", "segundos": 8 },
+  { "_id": 30, "altura": 199, "sensor": "Living", "fecha": "25/05/2025", "hora": "14:09:50", "segundos": 13 },
+  { "_id": 31, "altura": 199, "sensor": "Cochera", "fecha": "07/09/2025", "hora": "17:03:41", "segundos": 25 },
+  { "_id": 32, "altura": 199, "sensor": "Baño", "fecha": "22/11/2025", "hora": "21:26:31", "segundos": 6 }
+
+]
