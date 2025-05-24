@@ -123,7 +123,7 @@ class SensorManager {
 }
 
 // =============================================
-// MÓDULO: NAVEGACIÓN ENTRE PÁGINAS
+// MÓDULO: NAVEGACIÓN ENTRE PÁGINAS (ACTUALIZADO)
 // =============================================
 
 class NavigationManager {
@@ -189,6 +189,7 @@ class NavigationManager {
         if (btnEstadisticas) {
             btnEstadisticas.addEventListener('click', () => {
                 this.mostrarSeccion('panel-analisis');
+                this.ocultarFlechasNavegacion(); // NUEVA FUNCIÓN
                 this.inicializarFiltroAnalisis();
             });
         }
@@ -198,10 +199,42 @@ class NavigationManager {
         if (btnVolver) {
             btnVolver.addEventListener('click', () => {
                 this.ocultarSeccion('panel-analisis');
-                this.mostrarSeccion('casa1');
+                this.mostrarSeccionCasa(); // NUEVA FUNCIÓN
+                this.mostrarFlechasNavegacion(); // NUEVA FUNCIÓN
             });
         }
     }
+
+    // =============================================
+    // NUEVAS FUNCIONES PARA CONTROLAR FLECHAS
+    // =============================================
+
+    ocultarFlechasNavegacion() {
+        const navegacionCasas = document.querySelector('.navegacion-casas');
+        if (navegacionCasas) {
+            navegacionCasas.style.display = 'none';
+        }
+    }
+
+    mostrarFlechasNavegacion() {
+        const navegacionCasas = document.querySelector('.navegacion-casas');
+        if (navegacionCasas) {
+            navegacionCasas.style.display = 'flex';
+        }
+    }
+
+    mostrarSeccionCasa() {
+        // Determinar qué casa mostrar basándose en la URL actual
+        const currentFile = window.location.pathname.split("/").pop();
+        let casaId = 'casa1'; // default
+
+        if (currentFile === 'casa1.html') casaId = 'casa1';
+        else if (currentFile === 'casa2.html') casaId = 'casa2';
+        else if (currentFile === 'casa3.html') casaId = 'casa3';
+
+        this.mostrarSeccion(casaId);
+    }
+
     ocultarSeccionesEstaticas() {
         // Ocultar todas las secciones estáticas del HTML
         const seccionesEstaticas = document.querySelectorAll('.bloque-analisis');
@@ -373,6 +406,7 @@ class AnalysisManager {
     constructor(dataManager) {
         this.dataManager = dataManager;
         this.casaActual = "casa1";
+        this.charts = {}; // Para almacenar instancias de gráficos
         this.init();
     }
 
@@ -428,15 +462,14 @@ class AnalysisManager {
         }
     }
 
-    renderPanelCompleto(casaId) {
-        const data = this.dataManager.getDatosCasa(casaId);
-        if (!data) return;
-
-        const contenedor = document.getElementById("contenedor-estadisticas");
-        if (!contenedor) return;
-
-        contenedor.innerHTML = this.generateCompleteAnalysis(data);
-        this.createChart(data.comparativas.porHabitacion);
+    // Función para destruir gráficos existentes
+    destroyExistingCharts() {
+        Object.values(this.charts).forEach(chart => {
+            if (chart && typeof chart.destroy === 'function') {
+                chart.destroy();
+            }
+        });
+        this.charts = {};
     }
 
     renderSeccionAnalisis(seccion) {
@@ -445,6 +478,9 @@ class AnalysisManager {
 
         const contenedor = document.getElementById("contenedor-estadisticas");
         if (!contenedor) return;
+
+        // Destruir gráficos existentes antes de crear nuevos
+        this.destroyExistingCharts();
 
         contenedor.innerHTML = "";
 
@@ -465,23 +501,47 @@ class AnalysisManager {
     }
 
     renderUsoSection(contenedor, usoData) {
+        // Datos simulados para el gráfico de uso
+        const habitacionesUso = {
+            'Cocina': 45,
+            'Living': 32,
+            'Dormitorio': 28,
+            'Baño': 18,
+            'Oficina': 12,
+            'Cochera': 8
+        };
+
         contenedor.innerHTML = `
             <div class="bloque-analisis">
-                <h3>Uso de habitaciones</h3>
+                <h3>📊 Uso de habitaciones</h3>
                 <ul class="lista-analisis">
                     <li><strong>Habitación más usada:</strong> ${usoData.masUsada}</li>
                     <li><strong>Tiempo promedio de uso:</strong> ${usoData.promedio}</li>
                     <li><strong>Último uso:</strong> ${usoData.ultimoUso}</li>
                     <li><strong>Habitaciones sin uso este mes:</strong> ${usoData.sinUso.join(", ") || "Ninguna"}</li>
                 </ul>
+                <canvas id="graficoUsoHabitaciones" height="250"></canvas>
             </div>
         `;
+
+        setTimeout(() => this.createUsoChart(habitacionesUso), 0);
     }
 
     renderConsumoSection(contenedor, consumoData) {
+        // Datos simulados para gráfico de consumo semanal
+        const consumoSemanal = {
+            'Lun': 8.2,
+            'Mar': 9.1,
+            'Mié': 12.8,
+            'Jue': 11.4,
+            'Vie': 15.3,
+            'Sáb': 18.7,
+            'Dom': 16.2
+        };
+
         contenedor.innerHTML = `
             <div class="bloque-analisis">
-                <h3>Consumo y costos</h3>
+                <h3>⚡ Consumo y costos</h3>
                 <ul class="lista-analisis">
                     <li><strong>Consumo diario:</strong> ${consumoData.diario}</li>
                     <li><strong>Consumo mensual:</strong> ${consumoData.mensual}</li>
@@ -490,21 +550,41 @@ class AnalysisManager {
                     <li><strong>Bonificación aplicada:</strong> ${consumoData.bonificacion}</li>
                     <li><strong>Alerta de consumo:</strong> ${consumoData.alerta}</li>
                 </ul>
+                <canvas id="graficoConsumoSemanal" height="250"></canvas>
             </div>
         `;
+
+        setTimeout(() => this.createConsumoChart(consumoSemanal), 0);
     }
 
     renderHabitosSection(contenedor, habitosData) {
+        // Datos simulados para gráfico de hábitos por hora
+        const usoHorario = {
+            '6:00': 2,
+            '8:00': 8,
+            '10:00': 12,
+            '12:00': 15,
+            '14:00': 18,
+            '16:00': 22,
+            '18:00': 35,
+            '20:00': 42,
+            '22:00': 38,
+            '24:00': 25
+        };
+
         contenedor.innerHTML = `
             <div class="bloque-analisis">
-                <h3>Hábitos y horarios</h3>
+                <h3>🕒 Hábitos y horarios</h3>
                 <ul class="lista-analisis">
                     <li><strong>Franja horaria más activa:</strong> ${habitosData.franjaActiva}</li>
                     <li><strong>Día más activo:</strong> ${habitosData.diaActivo}</li>
                     <li><strong>Pico horario:</strong> ${habitosData.pico}</li>
                 </ul>
+                <canvas id="graficoHabitosHorarios" height="250"></canvas>
             </div>
         `;
+
+        setTimeout(() => this.createHabitosChart(usoHorario), 0);
     }
 
     renderComparativasSection(contenedor, comparativasData) {
@@ -514,7 +594,7 @@ class AnalysisManager {
 
         contenedor.innerHTML = `
             <div class="bloque-analisis">
-                <h3>Comparativas</h3>
+                <h3>📈 Comparativas</h3>
                 <ul class="lista-analisis">
                     <li><strong>Variación mensual:</strong> ${comparativasData.variacion}</li>
                     <li><strong>Top 3 casas:</strong><ul>${top3}</ul></li>
@@ -524,24 +604,158 @@ class AnalysisManager {
             </div>
         `;
 
-        setTimeout(() => this.createChart(comparativasData.porHabitacion), 0);
+        setTimeout(() => this.createComparativasChart(comparativasData.porHabitacion), 0);
     }
 
-    generateCompleteAnalysis(data) {
-        return `
-            ${this.renderUsoSection(document.createElement('div'), data.uso)}
-            ${this.renderConsumoSection(document.createElement('div'), data.consumo)}
-            ${this.renderHabitosSection(document.createElement('div'), data.habitos)}
-            ${this.renderComparativasSection(document.createElement('div'), data.comparativas)}
-        `;
+    // =============================================
+    // GRÁFICOS ESPECÍFICOS POR SECCIÓN
+    // =============================================
+
+    createUsoChart(habitacionesUso) {
+        const canvas = document.getElementById('graficoUsoHabitaciones');
+        if (!canvas || !window.Chart) return;
+
+        const ctx = canvas.getContext('2d');
+        this.charts.uso = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(habitacionesUso),
+                datasets: [{
+                    label: 'Activaciones',
+                    data: Object.values(habitacionesUso),
+                    backgroundColor: [
+                        '#5eb8ff',
+                        '#4facfe',
+                        '#00f2fe',
+                        '#667eea',
+                        '#764ba2',
+                        '#f093fb'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#1e2230'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: { color: '#cbf7ed' }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => `${ctx.label}: ${ctx.raw} activaciones`
+                        }
+                    }
+                }
+            }
+        });
     }
 
-    createChart(porHabitacionData) {
+    createConsumoChart(consumoSemanal) {
+        const canvas = document.getElementById('graficoConsumoSemanal');
+        if (!canvas || !window.Chart) return;
+
+        const ctx = canvas.getContext('2d');
+        this.charts.consumo = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Object.keys(consumoSemanal),
+                datasets: [{
+                    label: 'Consumo diario (kWh)',
+                    data: Object.values(consumoSemanal),
+                    borderColor: '#4facfe',
+                    backgroundColor: 'rgba(79, 172, 254, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#4facfe',
+                    pointBorderColor: '#cbf7ed',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: { color: '#cbf7ed' }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => `${ctx.raw} kWh`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            color: '#cbf7ed',
+                            callback: function(value) {
+                                return value + ' kWh';
+                            }
+                        },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    x: {
+                        ticks: { color: '#cbf7ed' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    }
+                }
+            }
+        });
+    }
+
+    createHabitosChart(usoHorario) {
+        const canvas = document.getElementById('graficoHabitosHorarios');
+        if (!canvas || !window.Chart) return;
+
+        const ctx = canvas.getContext('2d');
+        this.charts.habitos = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: Object.keys(usoHorario),
+                datasets: [{
+                    label: 'Actividad por hora',
+                    data: Object.values(usoHorario),
+                    borderColor: '#5eb8ff',
+                    backgroundColor: 'rgba(94, 184, 255, 0.2)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#5eb8ff',
+                    pointBorderColor: '#cbf7ed',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: { color: '#cbf7ed' }
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255,255,255,0.2)' },
+                        grid: { color: 'rgba(255,255,255,0.2)' },
+                        pointLabels: { color: '#cbf7ed' },
+                        ticks: {
+                            color: '#cbf7ed',
+                            backdropColor: 'transparent'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    createComparativasChart(porHabitacionData) {
         const canvas = document.getElementById('graficoConsumoHabitaciones');
         if (!canvas || !window.Chart) return;
 
         const ctx = canvas.getContext('2d');
-        new Chart(ctx, {
+        this.charts.comparativas = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: Object.keys(porHabitacionData),
@@ -549,7 +763,8 @@ class AnalysisManager {
                     label: 'Consumo (kWh)',
                     data: Object.values(porHabitacionData),
                     backgroundColor: '#5eb8ff',
-                    borderRadius: 8
+                    borderRadius: 8,
+                    borderSkipped: false
                 }]
             },
             options: {
@@ -564,7 +779,13 @@ class AnalysisManager {
                 },
                 scales: {
                     y: {
-                        ticks: { color: '#cbf7ed' }
+                        ticks: {
+                            color: '#cbf7ed',
+                            callback: function(value) {
+                                return value + ' kWh';
+                            }
+                        },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
                     },
                     x: {
                         ticks: { color: '#cbf7ed' },
