@@ -859,11 +859,45 @@ async function getTiempoPromedioPorHabitacion(altura, sensor) {
 // Agrupar los eventos por fecha (día, semana y mes)
 // Sumar el campo de consumo energético (Wh o duración estimada en kWh)
 // Devolver estructura para mostrar como gráfico o tabla comparativa
+async function getConsumoPorDiaSemanaYMes(altura) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/consumo-dia-semana-mes/{altura}`);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar el consumo`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar consumo:', error);
+    }
+}
+
+
+
+
+
+
 
 // TODO: Calcular costo estimado de la boleta de luz mensual
 // Tomar consumo total mensual por casa
 // Multiplicar por tarifa energética definida (ej. $120/kWh)
 // Mostrar total estimado en pesos argentinos
+async function getCostoEstimadoMensual(altura, mes, anio) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/costo-estimado/${altura}/${mes}/${anio}`);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar el costo estimado mensual`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar costo estimado mensual:', error);
+    }
+}
+
+
 
 // Determinar hora más activa
 async function getHoraMasActiva(altura) {
@@ -897,20 +931,70 @@ async function getHoraMasActiva(altura) {
 // Verificar si el consumo acumulado del mes supera el 90% del límite configurado por el usuario
 // Si se cumple, generar un mensaje de alerta (visual o por notificación)
 
+
+
+
 // TODO: Mostrar top 3 casas con mayor consumo
 // Agrupar consumo total por casa
 // Ordenar de mayor a menor
 // Devolver las tres casas con mayor consumo mensual
+async function getTop3CasasMayorConsumo() {
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/top3-casas');
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar el top 3 de casas`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar top 3 casas:', error);
+    }
+}
+
+
+
+
 
 // TODO: Calcular consumo por casa dividido por habitación
 // Agrupar los eventos por casaId y habitacion
 // Sumar la energía consumida en cada habitación de cada casa
 // Permitir mostrar gráficos comparativos internos por vivienda
+async function getConsumoCasaHabitacion(altura) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/consumo-casa-habitacion/${altura}`);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar el consumo total`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar el consumo total de la casa:', error);
+    }
+}
+
+
+
 
 // TODO: Detectar hábitos de uso por días de la semana
 // Obtener el día (lunes, martes, etc.) de cada activación
 // Contar la frecuencia de uso por cada día
 // Mostrar los días con mayor y menor consumo por casa
+async function getConsumoPorDia(altura) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/consumo-dia/${altura}`);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar consumo por día de semana`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al obtener consumo por día:', error);
+    }
+}
+
 
 // último uso de la casa
 async function getUltimaDeteccion(altura) {
@@ -946,6 +1030,21 @@ async function getHabitacionesSinUso(altura) {
 // Calcular el total de consumo agrupado por hora del día
 // Identificar horas con consumo inusualmente alto respecto al promedio diario
 // Útil para alertas o recomendaciones de eficiencia energética
+async function consumoPorHora(altura) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/consumo-por-hora/${altura}`);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar consumo por hora`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al obtener consumo por hora:', error);
+    }
+}
+
+
 
 
 
