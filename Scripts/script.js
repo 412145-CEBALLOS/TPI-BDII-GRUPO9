@@ -907,9 +907,26 @@ async function getHoraMasActiva(altura) {
     }
 }
 
-// TODO: Detectar escalón tarifario alcanzado por cada casa
-// Sumar consumo mensual y compararlo contra límites de escalones (ej. 300, 600 kWh)
-// Etiquetar el escalón alcanzado: 1, 2 o 3
+
+async function getEscalonTarifario(altura, fecha) {
+    try {
+        const url = new URL('http://localhost:8080/api/v1/escalon-tarifario');
+        url.searchParams.append('altura', altura);
+        url.searchParams.append('fecha', fecha);
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar el escalón tarifario`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar escalón tarifario:', error);
+    }
+}
+
+
 
 
 
