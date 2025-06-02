@@ -911,10 +911,14 @@ async function getHoraMasActiva(altura) {
 // Sumar consumo mensual y compararlo contra límites de escalones (ej. 300, 600 kWh)
 // Etiquetar el escalón alcanzado: 1, 2 o 3
 
+
+
 // TODO: Comparar consumo entre meses consecutivos
 // Agrupar consumo por mes
 // Calcular variación porcentual con respecto al mes anterior
 // Determinar si el consumo subió, bajó o se mantuvo
+
+
 
 // TODO: Aplicar bonificación por consumo estable
 // Detectar si el consumo actual se mantiene dentro de un margen estable (±5%)
@@ -929,7 +933,7 @@ async function getConsumoMensualAlerta(altura, fecha, limite) {
     try {
         const url = new URL('http://localhost:8080/api/v1/consumo-mensual-alerta');
         url.searchParams.append('altura', altura);
-        url.searchParams.append('fecha', fecha); // ejemplo: "02/06/2025"
+        url.searchParams.append('fecha', fecha);
         url.searchParams.append('limite', limite);
 
         const response = await fetch(url.toString());
