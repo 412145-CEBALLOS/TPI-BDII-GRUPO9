@@ -1,3 +1,83 @@
+let casa1 = {
+    uso: {
+        masUsada: null,
+        promedio: null,
+        ultimoUso: null,
+        sinUso: null
+    },
+    consumo: {
+        diario: null,
+        mensual: null,
+        costo: null,
+        escalon: null,
+        bonificacion: null,
+        alerta: null
+    },
+    habitos: {
+        franjaActiva: null,
+        diaActivo: null,
+        pico: null
+    },
+    comparativas: {
+        variacion: null,
+        top3: null,
+        porHabitacion: null
+    }
+};
+let casa2 = {
+    uso: {
+        masUsada: null,
+        promedio: null,
+        ultimoUso: null,
+        sinUso: null
+    },
+    consumo: {
+        diario: null,
+        mensual: null,
+        costo: null,
+        escalon: null,
+        bonificacion: null,
+        alerta: null
+    },
+    habitos: {
+        franjaActiva: null,
+        diaActivo: null,
+        pico: null
+    },
+    comparativas: {
+        variacion: null,
+        top3: null,
+        porHabitacion: null
+    }
+};
+let casa3 = {
+    uso: {
+        masUsada: null,
+        promedio: null,
+        ultimoUso: null,
+        sinUso: null
+    },
+    consumo: {
+        diario: null,
+        mensual: null,
+        costo: null,
+        escalon: null,
+        bonificacion: null,
+        alerta: null
+    },
+    habitos: {
+        franjaActiva: null,
+        diaActivo: null,
+        pico: null
+    },
+    comparativas: {
+        variacion: null,
+        top3: null,
+        porHabitacion: null
+    }
+};
+
+//#region oculto
 // =============================================
 // MÓDULO: GESTIÓN DE SENSORES Y HABITACIONES
 // =============================================
@@ -305,113 +385,86 @@ class NavigationManager {
 // =============================================
 // MÓDULO: DATOS Y ANÁLISIS
 // =============================================
-
+//#endregion
 class DataManager {
     constructor() {
         this.datosPorCasa = {
             casa1: {
                 uso: {
-                    masUsada: "Cocina", //hecho
-                    promedio: "3m 20s", //hecho (solo segundos)
-                    ultimoUso: "Dormitorio - 2025-05-22 22:15", //hecho
-                    sinUso: ["Oficina"] //hecho (mes actual)
+                    masUsada: null,
+                    promedio: null,
+                    ultimoUso: null,
+                    sinUso: null
                 },
                 consumo: {
-                    diario: "12.5 kWh",
-                    mensual: "352.3 kWh",
-                    costo: "$42.276",
-                    escalon: 2, // desde la bd
+                    diario: null,
+                    mensual: null,
+                    costo: null,
+                    escalon: 2,
                     bonificacion: "10%", // desde la bd
-                    alerta: "89% del límite alcanzado" // desde la bd
+                    alerta: null
                 },
                 habitos: {
-                    franjaActiva: "18:00–22:00", //hecho (una sola hora)
+                    franjaActiva: null,
                     diaActivo: "Miércoles",
-                    pico: "21:00 - 3.2 kWh"
+                    pico: "3.2 kWh"
                 },
                 comparativas: {
                     variacion: "+5%",
-                    top3: [
-                        { casa: "Casa 3", consumo: "412 kWh" },
-                        { casa: "Casa 1", consumo: "352 kWh" },
-                        { casa: "Casa 2", consumo: "291 kWh" }
-                    ],
-                    porHabitacion: {
-                        Cocina: 120,
-                        Living: 95,
-                        Dormitorio: 80,
-                        Oficina: 30
-                    }
+                    top3: null,
+                    porHabitacion: null
                 }
             },
             casa2: {
                 uso: {
-                    masUsada: "Living",
-                    promedio: "2m 40s",
-                    ultimoUso: "Baño - 2025-05-21 18:30",
-                    sinUso: []
+                    masUsada: null,
+                    promedio: null,
+                    ultimoUso: null,
+                    sinUso: null
                 },
                 consumo: {
-                    diario: "10.2 kWh",
-                    mensual: "291.1 kWh",
-                    costo: "$34.932",
-                    escalon: 1,
+                    diario: null,
+                    mensual: null,
+                    costo: null,
+                    escalon: null,
                     bonificacion: "0%",
-                    alerta: "72% del límite"
+                    alerta: null
                 },
                 habitos: {
-                    franjaActiva: "17:00–21:00",
+                    franjaActiva: null,
                     diaActivo: "Lunes",
-                    pico: "20:00 - 2.8 kWh"
+                    pico: "2.8 kWh"
                 },
                 comparativas: {
                     variacion: "-3%",
-                    top3: [
-                        { casa: "Casa 3", consumo: "412 kWh" },
-                        { casa: "Casa 1", consumo: "352 kWh" },
-                        { casa: "Casa 2", consumo: "291 kWh" }
-                    ],
-                    porHabitacion: {
-                        Cocina: 80,
-                        Comedor: 65,
-                        Dormitorio: 70,
-                        Baño: 50
-                    }
+                    top3: null,
+                    porHabitacion: null
                 }
             },
             casa3: {
                 uso: {
-                    masUsada: "Suite Master",
-                    promedio: "4m 10s",
-                    ultimoUso: "Entrada - 2025-05-23 20:10",
-                    sinUso: ["Terraza"]
+                    masUsada: null,
+                    promedio: null,
+                    ultimoUso: null,
+                    sinUso: null
                 },
                 consumo: {
-                    diario: "15.8 kWh",
-                    mensual: "412.0 kWh",
-                    costo: "$49.440",
-                    escalon: 3,
+                    diario: null,
+                    mensual: null,
+                    costo: null,
+                    escalon: null,
                     bonificacion: "0%",
-                    alerta: "98% del límite"
+                    alerta: null
                 },
                 habitos: {
-                    franjaActiva: "19:00–23:00",
+                    franjaActiva: null,
                     diaActivo: "Viernes",
-                    pico: "22:00 - 3.7 kWh"
+                    pico: "3.7 kWh"
                 },
                 comparativas: {
                     variacion: "+8%",
-                    top3: [
-                        { casa: "Casa 3", consumo: "412 kWh" },
-                        { casa: "Casa 1", consumo: "352 kWh" },
-                        { casa: "Casa 2", consumo: "291 kWh" }
-                    ],
-                    porHabitacion: {
-                        Entrada: 100,
-                        Salón: 110,
-                        Cocina: 95,
-                        Master: 120
-                    }
+                    top3: null,
+                    porHabitacion: null
                 }
             }
         };
@@ -421,11 +474,62 @@ class DataManager {
         return this.datosPorCasa[casaId] || null;
     }
 
-    getAllCasas() {
-        return this.datosPorCasa;
-    }
-}
+    cargarDatos() {
+        //#region casa 1
+        this.datosPorCasa.casa1.uso.masUsada = casa1.uso.masUsada;
+        this.datosPorCasa.casa1.uso.promedio = casa1.uso.promedio;
+        this.datosPorCasa.casa1.uso.ultimoUso = casa1.uso.ultimoUso;
+        this.datosPorCasa.casa1.uso.sinUso = casa1.uso.sinUso;
 
+        this.datosPorCasa.casa1.consumo.diario = casa1.consumo.diario;
+        this.datosPorCasa.casa1.consumo.mensual = casa1.consumo.mensual;
+        this.datosPorCasa.casa1.consumo.escalon = casa1.consumo.escalon;
+        this.datosPorCasa.casa1.consumo.costo = casa1.consumo.costo;
+        this.datosPorCasa.casa1.consumo.alerta = casa1.consumo.alerta;
+
+        this.datosPorCasa.casa1.habitos.franjaActiva = casa1.habitos.franjaActiva;
+        this.datosPorCasa.casa1.comparativas.top3 = casa1.comparativas.top3;
+        this.datosPorCasa.casa1.comparativas.porHabitacion = casa1.comparativas.porHabitacion;
+        console.log(this.datosPorCasa.casa1.comparativas.porHabitacion);
+        //#endregion
+        //#region casa 2
+        this.datosPorCasa.casa2.uso.masUsada = casa2.uso.masUsada;
+        this.datosPorCasa.casa2.uso.promedio = casa2.uso.promedio;
+        this.datosPorCasa.casa2.uso.ultimoUso = casa2.uso.ultimoUso;
+        this.datosPorCasa.casa2.uso.sinUso = casa2.uso.sinUso;
+
+        this.datosPorCasa.casa2.consumo.diario = casa2.consumo.diario;
+        this.datosPorCasa.casa2.consumo.mensual = casa2.consumo.mensual;
+        this.datosPorCasa.casa2.consumo.escalon = casa2.consumo.escalon;
+        this.datosPorCasa.casa2.consumo.costo = casa2.consumo.costo;
+        this.datosPorCasa.casa2.consumo.alerta = casa2.consumo.alerta;
+
+        this.datosPorCasa.casa2.habitos.franjaActiva = casa2.habitos.franjaActiva;
+        this.datosPorCasa.casa2.comparativas.top3 = casa2.comparativas.top3;
+        this.datosPorCasa.casa2.comparativas.porHabitacion = casa2.comparativas.porHabitacion;
+        console.log(this.datosPorCasa.casa2.comparativas.porHabitacion);
+        //#endregion
+        //#region casa 3
+        this.datosPorCasa.casa3.uso.masUsada = casa3.uso.masUsada;
+        this.datosPorCasa.casa3.uso.promedio = casa3.uso.promedio;
+        this.datosPorCasa.casa3.uso.ultimoUso = casa3.uso.ultimoUso;
+        this.datosPorCasa.casa3.uso.sinUso = casa3.uso.sinUso;
+
+        this.datosPorCasa.casa3.consumo.diario = casa3.consumo.diario;
+        this.datosPorCasa.casa3.consumo.mensual = casa3.consumo.mensual;
+        this.datosPorCasa.casa3.consumo.escalon = casa3.consumo.escalon;
+        this.datosPorCasa.casa3.consumo.costo = casa3.consumo.costo;
+        this.datosPorCasa.casa3.consumo.alerta = casa3.consumo.alerta;
+
+        this.datosPorCasa.casa3.habitos.franjaActiva = casa3.habitos.franjaActiva;
+        this.datosPorCasa.casa3.comparativas.top3 = casa3.comparativas.top3;
+        this.datosPorCasa.casa3.comparativas.porHabitacion = casa3.comparativas.porHabitacion;
+        console.log(this.datosPorCasa.casa3.comparativas.porHabitacion);
+        //#endregion
+    }
+
+}
+//#region oculto 2
 // =============================================
 // MÓDULO: ANÁLISIS Y REPORTES
 // =============================================
@@ -877,6 +981,7 @@ class AnalysisManager {
 class SmartHomeApp {
     constructor() {
         this.dataManager = new DataManager();
+        this.dataManager.cargarDatos();
         this.sensorManager = new SensorManager();
         this.navigationManager = new NavigationManager();
         this.analysisManager = new AnalysisManager(this.dataManager);
@@ -893,10 +998,98 @@ class SmartHomeApp {
 // =============================================
 // INICIALIZACIÓN AL CARGAR EL DOM
 // =============================================
+//#endregion
+document.addEventListener('DOMContentLoaded', async () => {
+    //#region casa 1
+    casa1.uso.masUsada = await getHabitacionMasUsada(176);
+    casa1.uso.promedio = await getTiempoPromedioPorHabitacion(176, casa1.uso.masUsada);
+    casa1.uso.ultimoUso = await getUltimaDeteccion(176);
+    casa1.uso.sinUso = await getHabitacionesSinUso(176);
+    let consumos = await getConsumoPorDiaSemanaYMes(176);
+    consumos = sumarConsumoPorTipo(consumos);
+    casa1.consumo.diario = consumos.dia/30 + "kWh";
+    casa1.consumo.mensual = consumos.mes + "kWh";
+    casa1.consumo.costo = await getCostoEstimadoMensual(176, 2025, 6);
+    casa1.consumo.costo = "$" + (casa1.consumo.costo * 100);
+    const conAlerta = await getConsumoMensualAlerta(176,"06/2025", 21);
+    casa1.consumo.alerta = conAlerta.alerta;
+    const escalon = await getEscalonTarifario(176,"06/2025");
+    casa1.consumo.escalon = Object.values(escalon)[0];
+    casa1.habitos.franjaActiva = await getHoraMasActiva(176);
+    casa1.comparativas.top3 = await getTop3CasasMayorConsumo();
+    const general = await getConsumoCasaHabitacion(176)
+    casa1.comparativas.porHabitacion = agruparPorHabitacion(general.porHabitacion);
+    //#endregion
+    //#region casa 2
+    casa2.uso.masUsada = await getHabitacionMasUsada(186);
+    casa2.uso.promedio = await getTiempoPromedioPorHabitacion(186, casa2.uso.masUsada);
+    casa2.uso.ultimoUso = await getUltimaDeteccion(186);
+    casa2.uso.sinUso = await getHabitacionesSinUso(186);
+    let consumos2 = await getConsumoPorDiaSemanaYMes(186);
+    consumos2 = sumarConsumoPorTipo(consumos2);
+    casa2.consumo.diario = consumos2.dia/30 + "kWh";
+    casa2.consumo.mensual = consumos2.mes + "kWh";
+    casa2.consumo.costo = await getCostoEstimadoMensual(186, 2025, 4);
+    casa2.consumo.costo = "$" + (casa2.consumo.costo * 100);
+    const conAlerta2 = await getConsumoMensualAlerta(186,"06/2025", 21);
+    casa2.consumo.alerta = conAlerta2.alerta;
+    const escalon2 = await getEscalonTarifario(186,"06/2025");
+    casa2.consumo.escalon = Object.values(escalon2)[0];
+    casa2.habitos.franjaActiva = await getHoraMasActiva(186);
+    casa2.comparativas.top3 = await getTop3CasasMayorConsumo();
+    const general2 = await getConsumoCasaHabitacion(186)
+    casa2.comparativas.porHabitacion = agruparPorHabitacion(general2.porHabitacion);
+    //#endregion
+    //#region casa 3
+    casa3.uso.masUsada = await getHabitacionMasUsada(199);
+    casa3.uso.promedio = await getTiempoPromedioPorHabitacion(199, casa3.uso.masUsada);
+    casa3.uso.ultimoUso = await getUltimaDeteccion(199);
+    casa3.uso.sinUso = await getHabitacionesSinUso(199);
+    let consumos3 = await getConsumoPorDiaSemanaYMes(199);
+    consumos3 = sumarConsumoPorTipo(consumos3);
+    casa3.consumo.diario = consumos3.dia/30 + "kWh";
+    casa3.consumo.mensual = consumos3.mes + "kWh";
+    casa3.consumo.costo = await getCostoEstimadoMensual(199, 2025, 4);
+    casa3.consumo.costo = "$" + (casa3.consumo.costo * 100);
+    const conAlerta3 = await getConsumoMensualAlerta(199,"04/2025", 1);
+    casa3.consumo.alerta = conAlerta3.alerta;
+    const escalon3 = await getEscalonTarifario(199,"06/2025");
+    casa3.consumo.escalon = Object.values(escalon3)[0];
+    casa3.habitos.franjaActiva = await getHoraMasActiva(199);
+    casa3.comparativas.top3 = await getTop3CasasMayorConsumo();
+    const general3 = await getConsumoCasaHabitacion(199)
+    casa3.comparativas.porHabitacion = agruparPorHabitacion(general3.porHabitacion);
+    //endregion
 
-document.addEventListener('DOMContentLoaded', () => {
     new SmartHomeApp();
 });
+
+function agruparPorHabitacion(data) {
+    const porHabitaciones = {};
+
+    data.forEach(item => {
+        porHabitaciones[item.habitacion] = item.consumo;
+    });
+
+    return porHabitaciones;
+}
+
+function sumarConsumoPorTipo(consumos) {
+    const resultado = {};
+
+    consumos.forEach(item => {
+        const tipo = item.tipo;
+        const consumo = item.consumo;
+
+        if (!resultado[tipo]) {
+            resultado[tipo] = 0;
+        }
+
+        resultado[tipo] += consumo;
+    });
+
+    return resultado;
+}
 
 // habitación más usada
 async function getHabitacionMasUsada(altura) {
@@ -907,7 +1100,7 @@ async function getHabitacionMasUsada(altura) {
             throw new Error(`Error ${response.status} al consultar la habitación`);
         }
 
-        return await response.json();
+        return await response.text();
     } catch (error) {
         console.error('Error al consultar:', error);
     }
@@ -922,16 +1115,15 @@ async function getTiempoPromedioPorHabitacion(altura, sensor) {
             throw new Error(`Error ${response.status} al consultar el tiempo`);
         }
 
-        return await response.json();
+        return await response.text();
     } catch (error) {
         console.error('Error al consultar:', error);
     }
 }
 
-
 async function getConsumoPorDiaSemanaYMes(altura) {
     try {
-        const response = await fetch(`http://localhost:8080/api/v1/consumo-dia-semana-mes/{altura}`);
+        const response = await fetch(`http://localhost:8080/api/v1/consumo-dia-semana-mes/`+altura);
 
         if (!response.ok) {
             throw new Error(`Error ${response.status} al consultar el consumo`);
@@ -942,12 +1134,6 @@ async function getConsumoPorDiaSemanaYMes(altura) {
         console.error('Error al consultar consumo:', error);
     }
 }
-
-
-
-
-
-
 
 async function getCostoEstimadoMensual(altura, mes, anio) {
     try {
@@ -963,8 +1149,6 @@ async function getCostoEstimadoMensual(altura, mes, anio) {
     }
 }
 
-
-
 // Determinar hora más activa
 async function getHoraMasActiva(altura) {
     try {
@@ -974,12 +1158,11 @@ async function getHoraMasActiva(altura) {
             throw new Error(`Error ${response.status} al consultar la hora`);
         }
 
-        return await response.json();
+        return response.text();
     } catch (error) {
         console.error('Error al consultar:', error);
     }
 }
-
 
 async function getEscalonTarifario(altura, fecha) {
     try {
@@ -998,26 +1181,6 @@ async function getEscalonTarifario(altura, fecha) {
         console.error('Error al consultar escalón tarifario:', error);
     }
 }
-
-
-
-
-
-// TODO: Comparar consumo entre meses consecutivos
-// Agrupar consumo por mes
-// Calcular variación porcentual con respecto al mes anterior
-// Determinar si el consumo subió, bajó o se mantuvo
-
-
-
-// TODO: Aplicar bonificación por consumo estable
-// Detectar si el consumo actual se mantiene dentro de un margen estable (±5%)
-// Si se cumple, aplicar una bonificación del 10% al costo total
-
-
-
-
-
 
 async function getConsumoMensualAlerta(altura, fecha, limite) {
     try {
@@ -1038,8 +1201,6 @@ async function getConsumoMensualAlerta(altura, fecha, limite) {
     }
 }
 
-
-
 async function getTop3CasasMayorConsumo() {
     try {
         const response = await fetch('http://localhost:8080/api/v1/top3-casas');
@@ -1054,10 +1215,6 @@ async function getTop3CasasMayorConsumo() {
     }
 }
 
-
-
-
-
 async function getConsumoCasaHabitacion(altura) {
     try {
         const response = await fetch(`http://localhost:8080/api/v1/consumo-casa-habitacion/${altura}`);
@@ -1071,9 +1228,6 @@ async function getConsumoCasaHabitacion(altura) {
         console.error('Error al consultar el consumo total de la casa:', error);
     }
 }
-
-
-
 
 async function getConsumoDia(altura) {
     const fecha = "02/03/2025";
@@ -1094,8 +1248,6 @@ async function getConsumoDia(altura) {
     }
 }
 
-
-
 // último uso de la casa
 async function getUltimaDeteccion(altura) {
     try {
@@ -1105,7 +1257,7 @@ async function getUltimaDeteccion(altura) {
             throw new Error(`Error ${response.status} al consultar la ultima detección`);
         }
 
-        return await response.json();
+        return await response.text();
     } catch (error) {
         console.error('Error al consultar:', error);
     }
@@ -1154,38 +1306,6 @@ async function getRangoDeFechas(altura, fechaInicio, fechaFin) {
         return await response.json();
     } catch (error) {
         console.error('Error al consultar rango de fechas:', error);
-    }
-}
-
-
-
-// obtener todas las casas
-async function getCasas() {
-    try {
-        const response = await fetch('http://localhost:8080/api/v1/casas');
-
-        if (!response.ok) {
-            throw new Error(`Error ${response.status} al consultar las casas`);
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error al consultar:', error);
-    }
-}
-
-// obtener una casa por su altura
-async function getCasaById(altura) {
-    try {
-        const response = await fetch('http://localhost:8080/api/v1/casas/' + altura);
-
-        if (!response.ok) {
-            throw new Error(`Error ${response.status} al consultar las casas`);
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error al consultar:', error);
     }
 }
 
