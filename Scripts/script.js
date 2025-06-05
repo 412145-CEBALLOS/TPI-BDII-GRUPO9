@@ -371,7 +371,6 @@ class NavigationManager {
         if (firstTab) {
             setTimeout(() => {
                 this.activateTab(firstTab);
-                AnalysisManager.renderSeccionAnalisis(firstTab.dataset.seccion);
             }, 100);
         }
     }
@@ -960,7 +959,7 @@ class AnalysisManager {
         })
             .catch(error => {
                 console.error('Error al obtener eventos:', error);
-            
+
             // Procesar eventos y actualizar gráfico según la tab activa
             const tabActiva = document.querySelector(".tab-btn.activa")?.dataset.seccion || "uso";
             this.actualizarGraficoConEventos(tabActiva, eventos);
@@ -1081,7 +1080,7 @@ class AnalysisManager {
 
         contenedor.innerHTML = `
         <div class="bloque-analisis">
-            <h3>📊 Uso de habitaciones (Filtrado)</h3>
+            <h3>Uso de habitaciones (Filtrado)</h3>
             <ul class="lista-analisis">
                 <li><strong>Total de activaciones:</strong> ${totalEventos}</li>
                 <li><strong>Habitación más usada:</strong> ${habitacionMasUsada} (${habitacionesUso[habitacionMasUsada]} veces)</li>
@@ -1159,7 +1158,7 @@ class AnalysisManager {
 
         contenedor.innerHTML = `
         <div class="bloque-analisis">
-            <h3>📈 Comparativas (Filtrado)</h3>
+            <h3>Comparativas (Filtrado)</h3>
             <ul class="lista-analisis">
                 <li><strong>Consumo estimado por habitación:</strong><ul>${habitacionesHtml}</ul></li>
             </ul>
