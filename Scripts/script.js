@@ -47,6 +47,8 @@ class SensorManager {
         // Desactivar luz visual
         habitacion.classList.remove('luz-encendida');
 
+        this.actualizarEstadoTabla(sensorId, 'apagado');
+
         // Actualizar estado en tabla
         const duracion = this.detenerTemporizador(sensorId);
 
