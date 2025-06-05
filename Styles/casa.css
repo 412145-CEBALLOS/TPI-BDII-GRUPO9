@@ -389,13 +389,20 @@ body {
     font-size: 0.9rem;
     cursor: pointer;
 }
-
-.resultados-analisis {
+#resultados-analisis {
+    display: block;
     background-color: rgba(35, 57, 91, 0.2);
     padding: 1rem;
     border-radius: 12px;
     margin-top: 1rem;
+    color: #fff;
+    min-height: 50px;
 }
+
+
+
+
+
 .bloque-analisis {
     background-color: rgba(35, 57, 91, 0.2);
     padding: 1rem;

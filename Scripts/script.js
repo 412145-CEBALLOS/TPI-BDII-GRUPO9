@@ -451,6 +451,12 @@ class AnalysisManager {
                 this.handleCasaChange();
             });
         }
+        const btnFiltrar = document.getElementById('btn-filtrar');
+        if (btnFiltrar) {
+            btnFiltrar.addEventListener('click', () => {
+                this.filtrarPorRangoDeFechas();
+            });
+        }
     }
 
     setupTabs() {
@@ -634,6 +640,7 @@ class AnalysisManager {
 
         setTimeout(() => this.createComparativasChart(comparativasData.porHabitacion), 0);
     }
+
 
     // =============================================
     // GRÁFICOS ESPECÍFICOS POR SECCIÓN
@@ -823,6 +830,44 @@ class AnalysisManager {
             }
         });
     }
+    filtrarPorRangoDeFechas() {
+        const altura = document.getElementById('filtro-casa').value;
+        const fechaInicioRaw = document.getElementById('filtro-desde').value;
+        const fechaFinRaw = document.getElementById('filtro-hasta').value;
+
+        if (!altura || !fechaInicioRaw || !fechaFinRaw) {
+            alert('Completá todos los campos');
+            return;
+        }
+
+        const fechaInicio = formatearFecha(fechaInicioRaw);
+        const fechaFin = formatearFecha(fechaFinRaw);
+
+        getRangoDeFechas(altura, fechaInicio, fechaFin).then(eventos => {
+
+            const contenedor = document.getElementById('resultados-analisis');
+            if (!contenedor) return;
+
+            contenedor.style.display = 'block';
+            contenedor.style.visibility = 'visible';
+
+            if (!eventos || eventos.length === 0) {
+                contenedor.innerHTML = `<p>⚠️ No se encontraron eventos en ese rango.</p>`;
+                return;
+            }
+
+            let html = '<div class="resultado-analisis"><h3>📊 Eventos filtrados</h3><ul>';
+            eventos.forEach(e => {
+                html += `<li>📍 ${e.sensor} | 📅 ${e.fecha} | 🕒 ${e.hora} | ⏱️ ${e.segundos} segundos</li>`;
+            });
+            html += '</ul></div>';
+
+            contenedor.innerHTML = html;
+        });
+    }
+
+
+
 }
 
 // =============================================
@@ -1095,6 +1140,22 @@ async function consumoPorHora(altura, fecha) {
         console.error('Error al obtener consumo por hora:', error);
     }
 }
+//Obtener eventos por rango de fechas
+async function getRangoDeFechas(altura, fechaInicio, fechaFin) {
+    try {
+        const url = `http://localhost:8080/api/v1/rango-fechas/${altura}?fechaInicio=${encodeURIComponent(fechaInicio)}&fechaFin=${encodeURIComponent(fechaFin)}`;
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al consultar el rango de fechas`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar rango de fechas:', error);
+    }
+}
 
 
 
@@ -1196,3 +1257,11 @@ function obtenerFechaHora() {
         hora: `${horas}:${minutos}:${segundos}`,
     };
 }
+
+
+function formatearFecha(fechaIso) {
+    const [year, month, day] = fechaIso.split("-");
+    return `${day}/${month}/${year}`;
+}
+
+

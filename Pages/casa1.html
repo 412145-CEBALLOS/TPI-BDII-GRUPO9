@@ -93,13 +93,12 @@
         <label>Hasta: <input type="date" id="filtro-hasta"></label>
         <label>Casa:
             <select id="filtro-casa">
-                <option value="todas">Todas</option>
-                <option value="casa1">Casa 1</option>
-                <option value="casa2">Casa 2</option>
-                <option value="casa3">Casa 3</option>
+                <option value="176">Casa 1</option>
+                <option value="186">Casa 2</option>
+                <option value="199">Casa 3</option>
             </select>
         </label>
-        <button class="btn-filtrar">Filtrar</button>
+        <button class="btn-filtrar" id="btn-filtrar">Filtrar</button>
     </div>
 
     <div class="bloque-analisis">
@@ -145,7 +144,7 @@
     </div>
 
     <!-- Resultados (puede ser tabla, tarjetas, gráficos) -->
-    <div class="resultados-analisis">
+    <div class="resultados-analisis" id="resultados-analisis">
         <p>⚠️ Aún no hay datos filtrados. Elegí una opción y presioná "Filtrar".</p>
     </div>
 
