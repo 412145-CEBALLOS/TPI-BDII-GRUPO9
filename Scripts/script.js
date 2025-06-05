@@ -650,7 +650,7 @@ class AnalysisManager {
 
         contenedor.innerHTML = `
             <div class="bloque-analisis">
-                <h3>📊 Uso de habitaciones</h3>
+                <h3>Uso de habitaciones</h3>
                 <ul class="lista-analisis">
                     <li><strong>Habitación más usada:</strong> ${usoData.masUsada}</li>
                     <li><strong>Tiempo promedio de uso:</strong> ${usoData.promedio}</li>
@@ -678,7 +678,7 @@ class AnalysisManager {
 
         contenedor.innerHTML = `
             <div class="bloque-analisis">
-                <h3>⚡ Consumo y costos</h3>
+                <h3>Consumo y costos</h3>
                 <ul class="lista-analisis">
                     <li><strong>Consumo diario:</strong> ${consumoData.diario}</li>
                     <li><strong>Consumo mensual:</strong> ${consumoData.mensual}</li>
@@ -711,7 +711,7 @@ class AnalysisManager {
 
         contenedor.innerHTML = `
             <div class="bloque-analisis">
-                <h3>🕒 Hábitos y horarios</h3>
+                <h3>Hábitos y horarios</h3>
                 <ul class="lista-analisis">
                     <li><strong>Franja horaria más activa:</strong> ${habitosData.franjaActiva}</li>
                     <li><strong>Día más activo:</strong> ${habitosData.diaActivo}</li>
@@ -731,7 +731,7 @@ class AnalysisManager {
 
         contenedor.innerHTML = `
             <div class="bloque-analisis">
-                <h3>📈 Comparativas</h3>
+                <h3>Comparativas</h3>
                 <ul class="lista-analisis">
                     <li><strong>Variación mensual:</strong> ${comparativasData.variacion}</li>
                     <li><strong>Top 3 casas:</strong><ul>${top3}</ul></li>
