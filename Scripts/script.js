@@ -27,11 +27,13 @@ class SensorManager {
     }
 
     activarSensor(habitacion, sensorId) {
+        const casa = habitacion.closest('.pagina');
+        const altura = casa ? casa.dataset.altura || casa.id : null;
         // Activar luz visual
         habitacion.classList.add('luz-encendida');
 
         // Enviar datos al servidor
-        this.enviarDatosSensor(sensorId);
+        this.enviarDatosSensor(sensorId, 0, altura);
 
         // Agregar fila a tabla si no existe
         this.agregarFilaTabla(sensorId);
@@ -43,28 +45,41 @@ class SensorManager {
     }
 
     desactivarSensor(habitacion, sensorId) {
+        const casa = habitacion.closest('.pagina');
+        const altura = casa ? casa.dataset.altura || casa.id : null;
         // Desactivar luz visual
         habitacion.classList.remove('luz-encendida');
 
         // Actualizar estado en tabla
-        this.actualizarEstadoTabla(sensorId, 'apagado');
+        const duracion = this.detenerTemporizador(sensorId);
 
         // Detener temporizador
-        this.detenerTemporizador(sensorId);
+        this.enviarDatosSensor(sensorId, duracion, altura);
     }
 
-    enviarDatosSensor(sensor) {
-        console.log(`Sensor activado en: ${sensor}`);
-        //TODO subir a la BD con "postEvento(altura, sensor, segundos)"
-        fetch('/api/sensor/encendido', {
+    enviarDatosSensor(sensorId, segundos, altura) {
+        const alturaCasa = altura;
+        const fecha = new Date();
+
+        const fechaFormateada = fecha.toLocaleDateString('es-AR');
+        const horaFormateada = fecha.toLocaleTimeString('es-AR');
+
+
+        fetch('http://localhost:8080/api/v1/eventos', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                habitacion: sensor,
-                timestamp: new Date().toISOString()
+                altura: alturaCasa,
+                sensor: sensorId,
+                fecha: fechaFormateada,
+                hora: horaFormateada,
+                segundos: segundos
             })
+
+        }).then(() => {
+            console.log(`Evento registrado para ${sensorId}, duración: ${segundos} segundos`);
         }).catch(error => {
-            console.error('Error enviando datos del sensor:', error);
+            console.error('Error al registrar el evento:', error);
         });
     }
 
@@ -131,7 +146,9 @@ class SensorManager {
             const diff = Math.floor((now - timer.startTime) / 1000);
             timer.elapsedSeconds = diff;
             this.temporizadores[sensorId] = timer;
+            return diff;
         }
+        return 0;
     }
 }
 
