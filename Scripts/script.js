@@ -32,9 +32,6 @@ class SensorManager {
         // Activar luz visual
         habitacion.classList.add('luz-encendida');
 
-        // Enviar datos al servidor
-        this.enviarDatosSensor(sensorId, 0, altura);
-
         // Agregar fila a tabla si no existe
         this.agregarFilaTabla(sensorId);
 
@@ -61,7 +58,10 @@ class SensorManager {
         const alturaCasa = altura;
         const fecha = new Date();
 
-        const fechaFormateada = fecha.toLocaleDateString('es-AR');
+        const dia = String(fecha.getDate()).padStart(2, '0');
+        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+        const anio = fecha.getFullYear();
+        const fechaFormateada = `${dia}/${mes}/${anio}`;
         const horaFormateada = fecha.toLocaleTimeString('es-AR');
 
 
