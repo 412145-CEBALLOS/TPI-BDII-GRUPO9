@@ -334,11 +334,11 @@ class NavigationManager {
     mostrarSeccionCasa() {
         // Determinar qué casa mostrar basándose en la URL actual
         const currentFile = window.location.pathname.split("/").pop();
-        let casaId = 'casa1'; // default
+        let casaId = '176'; // default
 
-        if (currentFile === 'casa1.html') casaId = 'casa1';
-        else if (currentFile === 'casa2.html') casaId = 'casa2';
-        else if (currentFile === 'casa3.html') casaId = 'casa3';
+        if (currentFile === 'casa1.html') casaId = '176';
+        else if (currentFile === 'casa2.html') casaId = '186';
+        else if (currentFile === 'casa3.html') casaId = '199';
 
         this.mostrarSeccion(casaId);
     }
@@ -371,7 +371,7 @@ class NavigationManager {
         if (firstTab) {
             setTimeout(() => {
                 this.activateTab(firstTab);
-                this.renderSeccionAnalisis(firstTab.dataset.seccion);
+                AnalysisManager.renderSeccionAnalisis(firstTab.dataset.seccion);
             }, 100);
         }
     }
@@ -946,31 +946,342 @@ class AnalysisManager {
 
         const fechaInicio = formatearFecha(fechaInicioRaw);
         const fechaFin = formatearFecha(fechaFinRaw);
+        
+        //NUEVO
+        this.cambiarCasaPorAltura(altura);
+
+        const contenedor = document.getElementById("contenedor-estadisticas");
+        if (contenedor) {
+            contenedor.innerHTML = '<div class="loading">Cargando datos filtrados...</div>';
+        }
 
         getRangoDeFechas(altura, fechaInicio, fechaFin).then(eventos => {
-
-            const contenedor = document.getElementById('resultados-analisis');
-            if (!contenedor) return;
-
+            this.procesarEventosFiltrados(eventos);
+        })
+            .catch(error => {
+                console.error('Error al obtener eventos:', error);
+            
+            // Procesar eventos y actualizar gráfico según la tab activa
+            const tabActiva = document.querySelector(".tab-btn.activa")?.dataset.seccion || "uso";
+            this.actualizarGraficoConEventos(tabActiva, eventos);
+        });
+    }
+    // NUEVA: Procesar eventos filtrados
+    procesarEventosFiltrados(eventos) {
+        const contenedor = document.getElementById('resultados-analisis');
+        if (contenedor) {
             contenedor.style.display = 'block';
             contenedor.style.visibility = 'visible';
 
             if (!eventos || eventos.length === 0) {
-                contenedor.innerHTML = `<p>⚠️ No se encontraron eventos en ese rango.</p>`;
+                contenedor.innerHTML = `<p>No se encontraron eventos en ese rango.</p>`;
+                // Mostrar datos por defecto
+                const tabActiva = document.querySelector(".tab-btn.activa")?.dataset.seccion || "uso";
+                this.renderSeccionAnalisis(tabActiva);
                 return;
             }
+        }
 
-            let html = '<div class="resultado-analisis"><h3>📊 Eventos filtrados</h3><ul>';
-            eventos.forEach(e => {
-                html += `<li>📍 ${e.sensor} | 📅 ${e.fecha} | 🕒 ${e.hora} | ⏱️ ${e.segundos} segundos</li>`;
-            });
-            html += '</ul></div>';
+        // Procesar eventos y actualizar gráfico según la tab activa
+        const tabActiva = document.querySelector(".tab-btn.activa")?.dataset.seccion || "uso";
+        this.actualizarGraficoConEventos(tabActiva, eventos);
+    }
 
-            contenedor.innerHTML = html;
+    cambiarCasaPorAltura(altura) {
+        switch(altura) {
+            case '176':
+                this.casaActual = 'casa1';
+                break;
+            case '186':
+                this.casaActual = 'casa2';
+                break;
+            case '199':
+                this.casaActual = 'casa3';
+                break;
+            default:
+                this.casaActual = 'casa1';
+        }
+
+        // Actualizar el filtro visual
+        const filtroCasa = document.getElementById('filtro-casa');
+        if (filtroCasa) {
+            filtroCasa.value = this.casaActual;
+        }
+    }
+
+    // Nueva función para actualizar gráficos con eventos filtrados
+    actualizarGraficoConEventos(seccion, eventos) {
+        const contenedor = document.getElementById("contenedor-estadisticas");
+        if (!contenedor) return;
+
+        // Destruir gráficos existentes
+        this.destroyExistingCharts();
+
+        switch (seccion) {
+            case "uso":
+                this.renderUsoFiltrado(contenedor, eventos);
+                break;
+            case "consumo":
+                this.renderConsumoFiltrado(contenedor, eventos);
+                break;
+            case "habitos":
+                this.renderHabitosFiltrado(contenedor, eventos);
+                break;
+            case "comparativas":
+                this.renderComparativasFiltrado(contenedor, eventos);
+                break;
+        }
+    }
+
+// Función para procesar eventos por habitación
+    procesarEventosPorHabitacion(eventos) {
+        const habitaciones = {};
+        eventos.forEach(evento => {
+            const sensor = evento.sensor;
+            if (!habitaciones[sensor]) {
+                habitaciones[sensor] = 0;
+            }
+            habitaciones[sensor]++;
+        });
+        return habitaciones;
+    }
+
+// Función para procesar eventos por día
+    procesarEventosPorDia(eventos) {
+        const dias = {};
+        eventos.forEach(evento => {
+            const fecha = evento.fecha;
+            if (!dias[fecha]) {
+                dias[fecha] = 0;
+            }
+            dias[fecha] += parseFloat(evento.segundos) / 3600; // Convertir a horas
+        });
+        return dias;
+    }
+
+// Función para procesar eventos por hora
+    procesarEventosPorHora(eventos) {
+        const horas = {};
+        eventos.forEach(evento => {
+            const hora = evento.hora.split(':')[0] + ':00';
+            if (!horas[hora]) {
+                horas[hora] = 0;
+            }
+            horas[hora]++;
+        });
+        return horas;
+    }
+
+// Renderizar sección USO con datos filtrados
+    renderUsoFiltrado(contenedor, eventos) {
+        const habitacionesUso = this.procesarEventosPorHabitacion(eventos);
+        const totalEventos = eventos.length;
+        const habitacionMasUsada = Object.keys(habitacionesUso).reduce((a, b) =>
+            habitacionesUso[a] > habitacionesUso[b] ? a : b);
+
+        contenedor.innerHTML = `
+        <div class="bloque-analisis">
+            <h3>📊 Uso de habitaciones (Filtrado)</h3>
+            <ul class="lista-analisis">
+                <li><strong>Total de activaciones:</strong> ${totalEventos}</li>
+                <li><strong>Habitación más usada:</strong> ${habitacionMasUsada} (${habitacionesUso[habitacionMasUsada]} veces)</li>
+                <li><strong>Habitaciones detectadas:</strong> ${Object.keys(habitacionesUso).length}</li>
+            </ul>
+            <canvas id="graficoUsoHabitaciones" height="250"></canvas>
+        </div>
+    `;
+
+        setTimeout(() => this.createUsoChart(habitacionesUso), 0);
+    }
+
+// Renderizar sección CONSUMO con datos filtrados
+    renderConsumoFiltrado(contenedor, eventos) {
+        const consumoPorDia = this.procesarEventosPorDia(eventos);
+        const totalHoras = Object.values(consumoPorDia).reduce((a, b) => a + b, 0);
+        const promedioKwh = (totalHoras * 0.1).toFixed(2); // Estimación simple
+
+        contenedor.innerHTML = `
+        <div class="bloque-analisis">
+            <h3>Consumo (Filtrado)</h3>
+            <ul class="lista-analisis">
+                <li><strong>Total de horas de uso:</strong> ${totalHoras.toFixed(1)} horas</li>
+                <li><strong>Consumo estimado:</strong> ${promedioKwh} kWh</li>
+                <li><strong>Días con actividad:</strong> ${Object.keys(consumoPorDia).length}</li>
+            </ul>
+            <canvas id="graficoConsumoSemanal" height="250"></canvas>
+        </div>
+    `;
+
+        setTimeout(() => this.createConsumoChartFiltrado(consumoPorDia), 0);
+    }
+
+// Renderizar sección HÁBITOS con datos filtrados
+    renderHabitosFiltrado(contenedor, eventos) {
+        const usoPorHora = this.procesarEventosPorHora(eventos);
+        const horaMasActiva = Object.keys(usoPorHora).reduce((a, b) =>
+            usoPorHora[a] > usoPorHora[b] ? a : b);
+
+        contenedor.innerHTML = `
+        <div class="bloque-analisis">
+            <h3>🕒 Hábitos y horarios (Filtrado)</h3>
+            <ul class="lista-analisis">
+                <li><strong>Hora más activa:</strong> ${horaMasActiva} (${usoPorHora[horaMasActiva]} activaciones)</li>
+                <li><strong>Total de franjas activas:</strong> ${Object.keys(usoPorHora).length}</li>
+            </ul>
+            <canvas id="graficoHabitosHorarios" height="250"></canvas>
+        </div>
+    `;
+
+        setTimeout(() => this.createHabitosChartFiltrado(usoPorHora), 0);
+    }
+
+// Renderizar sección COMPARATIVAS con datos filtrados
+    renderComparativasFiltrado(contenedor, eventos) {
+        const habitacionesUso = this.procesarEventosPorHabitacion(eventos);
+        const tiempoPorHabitacion = {};
+
+        // Calcular tiempo total por habitación
+        eventos.forEach(evento => {
+            const sensor = evento.sensor;
+            if (!tiempoPorHabitacion[sensor]) {
+                tiempoPorHabitacion[sensor] = 0;
+            }
+            tiempoPorHabitacion[sensor] += parseFloat(evento.segundos);
+        });
+
+        // Convertir a horas y estimar kWh
+        Object.keys(tiempoPorHabitacion).forEach(hab => {
+            tiempoPorHabitacion[hab] = (tiempoPorHabitacion[hab] / 3600 * 0.1).toFixed(2);
+        });
+
+        const habitacionesHtml = Object.entries(tiempoPorHabitacion)
+            .map(([hab, kwh]) => `<li>${hab}: ${kwh} kWh</li>`).join("");
+
+        contenedor.innerHTML = `
+        <div class="bloque-analisis">
+            <h3>📈 Comparativas (Filtrado)</h3>
+            <ul class="lista-analisis">
+                <li><strong>Consumo estimado por habitación:</strong><ul>${habitacionesHtml}</ul></li>
+            </ul>
+            <canvas id="graficoConsumoHabitaciones" height="250"></canvas>
+        </div>
+    `;
+
+        setTimeout(() => this.createComparativasChart(tiempoPorHabitacion), 0);
+    }
+
+// Gráfico de consumo adaptado para datos filtrados
+    createConsumoChartFiltrado(consumoPorDia) {
+        const canvas = document.getElementById('graficoConsumoSemanal');
+        if (!canvas || !window.Chart) return;
+
+        const ctx = canvas.getContext('2d');
+
+        // Ordenar fechas y limitar a últimos 7 días si hay muchos
+        const fechasOrdenadas = Object.keys(consumoPorDia).sort();
+        const fechasLimitadas = fechasOrdenadas.slice(-7);
+        const datosLimitados = fechasLimitadas.map(fecha => consumoPorDia[fecha]);
+
+        this.charts.consumo = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: fechasLimitadas,
+                datasets: [{
+                    label: 'Horas de uso',
+                    data: datosLimitados,
+                    borderColor: '#4facfe',
+                    backgroundColor: 'rgba(79, 172, 254, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#4facfe',
+                    pointBorderColor: '#cbf7ed',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: { color: '#cbf7ed' }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => `${ctx.raw.toFixed(1)} horas`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            color: '#cbf7ed',
+                            callback: function(value) {
+                                return value.toFixed(1) + ' h';
+                            }
+                        },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    x: {
+                        ticks: { color: '#cbf7ed' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    }
+                }
+            }
         });
     }
 
+// Gráfico de hábitos adaptado para datos filtrados
+    createHabitosChartFiltrado(usoPorHora) {
+        const canvas = document.getElementById('graficoHabitosHorarios');
+        if (!canvas || !window.Chart) return;
 
+        const ctx = canvas.getContext('2d');
+
+        // Asegurar que tenemos todas las horas del día
+        const horasCompletas = {};
+        for (let i = 0; i < 24; i++) {
+            const hora = i.toString().padStart(2, '0') + ':00';
+            horasCompletas[hora] = usoPorHora[hora] || 0;
+        }
+
+        this.charts.habitos = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: Object.keys(horasCompletas),
+                datasets: [{
+                    label: 'Activaciones por hora',
+                    data: Object.values(horasCompletas),
+                    borderColor: '#5eb8ff',
+                    backgroundColor: 'rgba(94, 184, 255, 0.2)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#5eb8ff',
+                    pointBorderColor: '#cbf7ed',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: { color: '#cbf7ed' }
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255,255,255,0.2)' },
+                        grid: { color: 'rgba(255,255,255,0.2)' },
+                        pointLabels: { color: '#cbf7ed' },
+                        ticks: {
+                            color: '#cbf7ed',
+                            backdropColor: 'transparent'
+                        }
+                    }
+                }
+            }
+        });
+        }
 
 }
 
