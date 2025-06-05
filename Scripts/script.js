@@ -44,16 +44,17 @@ class SensorManager {
     desactivarSensor(habitacion, sensorId) {
         const casa = habitacion.closest('.pagina');
         const altura = casa ? casa.dataset.altura || casa.id : null;
-        // Desactivar luz visual
-        habitacion.classList.remove('luz-encendida');
 
+        habitacion.classList.remove('luz-encendida');
         this.actualizarEstadoTabla(sensorId, 'apagado');
 
-        // Actualizar estado en tabla
+        // Detener temporizador y obtener duración
         const duracion = this.detenerTemporizador(sensorId);
 
-        // Detener temporizador
-        this.enviarDatosSensor(sensorId, duracion, altura);
+        // Enviar datos solo si la duración fue mayor a 0
+        if (duracion > 0) {
+            this.enviarDatosSensor(sensorId, duracion, altura);
+        }
     }
 
     enviarDatosSensor(sensorId, segundos, altura) {
@@ -116,16 +117,13 @@ class SensorManager {
     }
 
     iniciarTemporizador(sensorId) {
+        if (this.temporizadores[sensorId]) return;
         const span = document.getElementById(`timer-${sensorId}`);
         if (!span) return;
 
-        const now = new Date();
-        let startTime = now;
-
-        if (this.temporizadores[sensorId]) {
-            const elapsed = this.temporizadores[sensorId].elapsedSeconds || 0;
-            startTime = new Date(now.getTime() - elapsed * 1000);
-        }
+        span.textContent = "00:00";
+        
+        const startTime = new Date();
 
         this.temporizadores[sensorId] = {
             interval: setInterval(() => {
@@ -136,7 +134,6 @@ class SensorManager {
                 span.textContent = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
             }, 1000),
             startTime: startTime,
-            elapsedSeconds: this.temporizadores[sensorId]?.elapsedSeconds || 0
         };
     }
 
@@ -146,8 +143,7 @@ class SensorManager {
             clearInterval(timer.interval);
             const now = new Date();
             const diff = Math.floor((now - timer.startTime) / 1000);
-            timer.elapsedSeconds = diff;
-            this.temporizadores[sensorId] = timer;
+            delete this.temporizadores[sensorId];
             return diff;
         }
         return 0;
