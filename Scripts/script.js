@@ -36,6 +36,8 @@ class SensorManager {
         // Agregar fila a tabla si no existe
         this.agregarFilaTabla(sensorId);
 
+        this.actualizarEstadoTabla(sensorId, 'encendido');
+
         // Iniciar temporizador
         this.iniciarTemporizador(sensorId);
     }
@@ -100,16 +102,24 @@ class SensorManager {
         const span = document.getElementById(`timer-${sensorId}`);
         if (!span) return;
 
-        const start = new Date();
+        const now = new Date();
+        let startTime = now;
+
+        if (this.temporizadores[sensorId]) {
+            const elapsed = this.temporizadores[sensorId].elapsedSeconds || 0;
+            startTime = new Date(now.getTime() - elapsed * 1000);
+        }
+
         this.temporizadores[sensorId] = {
             interval: setInterval(() => {
                 const now = new Date();
-                const diff = Math.floor((now - start) / 1000);
+                const diff = Math.floor((now - startTime) / 1000);
                 const min = Math.floor(diff / 60);
                 const sec = diff % 60;
                 span.textContent = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
             }, 1000),
-            startTime: start
+            startTime: startTime,
+            elapsedSeconds: this.temporizadores[sensorId]?.elapsedSeconds || 0
         };
     }
 
@@ -117,7 +127,10 @@ class SensorManager {
         const timer = this.temporizadores[sensorId];
         if (timer) {
             clearInterval(timer.interval);
-            delete this.temporizadores[sensorId];
+            const now = new Date();
+            const diff = Math.floor((now - timer.startTime) / 1000);
+            timer.elapsedSeconds = diff;
+            this.temporizadores[sensorId] = timer;
         }
     }
 }
